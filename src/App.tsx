@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Home from "./pages/home/home";
+import Login from "./pages/login/login";
+import Layout from "./styles/layout/layout";
+import { ThemeProvider } from "styled-components";
+import theme from "./styles/layout/themes";
+import { useState } from "react";
+import GlobalStyle from "./styles/globalStyles";
 
-function App() {
+const App = () => {
+  const [themeMode, setThemeMode] = useState<keyof typeof theme>("light");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <ThemeProvider theme={theme[themeMode]}>
+        <GlobalStyle />
+        <Layout>
+          <button
+            onClick={() => {
+              if (themeMode === "light") setThemeMode("dark");
+              else setThemeMode("light");
+            }}
+          >
+            button
+          </button>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Layout>
+      </ThemeProvider>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
