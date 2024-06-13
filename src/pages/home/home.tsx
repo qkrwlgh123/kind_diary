@@ -1,12 +1,13 @@
-import Calendar from "../../components/calendar/calendar";
+import CalendarComponent from "../../components/calendar/calendar";
 import Todo from "../../components/toDo/toDo";
+import Style from "./home.style";
 
 const Home = () => {
   return (
-    <>
-      <Calendar />
+    <Style.Container>
+      <CalendarComponent />
       <Todo />
-    </>
+    </Style.Container>
   );
 };
 

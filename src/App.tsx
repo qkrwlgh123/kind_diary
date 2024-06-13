@@ -15,14 +15,6 @@ const App = () => {
       <ThemeProvider theme={theme[themeMode]}>
         <GlobalStyle />
         <Layout>
-          <button
-            onClick={() => {
-              if (themeMode === "light") setThemeMode("dark");
-              else setThemeMode("light");
-            }}
-          >
-            button
-          </button>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />

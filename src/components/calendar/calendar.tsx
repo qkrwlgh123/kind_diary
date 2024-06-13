@@ -1,7 +1,14 @@
 import Style from "./calendar.style";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import "./calendar.css";
 
-const Calendar = () => {
-  return <>캘린더 컴포넌트</>;
+const CalendarComponent = () => {
+  return (
+    <Style.CalendarContainer>
+      <Calendar onClickDay={(value) => alert(value)} calendarType="gregory" />
+    </Style.CalendarContainer>
+  );
 };
 
-export default Calendar;
+export default CalendarComponent;

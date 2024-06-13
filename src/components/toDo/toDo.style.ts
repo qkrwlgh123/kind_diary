@@ -1,3 +1,7 @@
 import styled from "styled-components";
 
-export default {};
+const TodoContainer = styled.div`
+  width: 50%;
+`;
+
+export default { TodoContainer };

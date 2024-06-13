@@ -5,11 +5,14 @@ const OuterLayout = styled.div`
   height: 100vh;
   color: ${(props) => props.theme.fontColor};
   display: flex;
-  justify-content: center;
 `;
 
 const InnerLayout = styled.div`
+  display: flex;
+  justify-content: center;
   margin-top: 150px;
+  width: 100%;
+  height: 50%;
 `;
 
 export default { OuterLayout, InnerLayout };
