@@ -1,9 +1,13 @@
 import Style from "./addNewObject.style";
 
-const AddNewObject = () => {
+const AddNewObject = ({
+  handleControlModal,
+}: {
+  handleControlModal: () => void;
+}) => {
   return (
     <Style.ButtonContainer>
-      <div>
+      <div onClick={handleControlModal}>
         <button>새 목표 생성</button>
       </div>
     </Style.ButtonContainer>
