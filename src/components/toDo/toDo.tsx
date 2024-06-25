@@ -1,4 +1,4 @@
-import { ObjectInferface, TodoInterface } from "../../pages/home/home";
+import { ObjectInferface, TodoInterface } from "../../types/object";
 import AddNewObject from "./newObject/addNewObject";
 import Object from "./object/object";
 import Style from "./toDo.style";

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { TodoInterface } from "../../../pages/home/home";
+import { TodoInterface } from "../../../types/object";
 
 const Object = ({
   id,
@@ -34,11 +34,13 @@ const Object = ({
     if (event.nativeEvent.isComposing) {
       return;
     }
-    if (event.key === "Enter") {
-      const prevTodoList = toDoList;
-      const latestObjectId = prevTodoList[prevTodoList.length - 1]?.id || 0;
 
-      handleAddTodo(id, { id: latestObjectId + 1, name: typedTodo });
+    if (event.key === "Enter") {
+      if (toDoList.map((todo) => todo.name).includes(typedTodo)) {
+        alert("중복된 할일이 존재합니다.");
+        return;
+      }
+      handleAddTodo(id, { name: typedTodo });
       setTypedTodo("");
     }
   };
