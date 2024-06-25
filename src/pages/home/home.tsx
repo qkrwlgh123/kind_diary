@@ -184,7 +184,12 @@ const Home = () => {
           value={typedObject}
           onChange={handleTypingObject}
           onKeyDown={(event) => {
-            if (event.key === "Enter") handleAddObject();
+            if (event.key === "Enter") {
+              if (event.nativeEvent.isComposing) {
+                return;
+              }
+              handleAddObject();
+            }
           }}
         />
         <div onClick={handleAddObject}>
