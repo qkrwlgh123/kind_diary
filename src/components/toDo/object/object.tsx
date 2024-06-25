@@ -31,6 +31,9 @@ const Object = ({
 
   /** 입력 중 엔터키 누를 시 할일이 추가되는 함수 */
   const handlePressEnter = (event: React.KeyboardEvent) => {
+    if (event.nativeEvent.isComposing) {
+      return;
+    }
     if (event.key === "Enter") {
       const prevTodoList = toDoList;
       const latestObjectId = prevTodoList[prevTodoList.length - 1]?.id || 0;
