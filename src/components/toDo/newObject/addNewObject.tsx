@@ -1,3 +1,4 @@
+import Button from "../../common/button/button";
 import Style from "./addNewObject.style";
 
 const AddNewObject = ({
@@ -7,9 +8,7 @@ const AddNewObject = ({
 }) => {
   return (
     <Style.ButtonContainer>
-      <div onClick={handleControlModal}>
-        <button>새 목표 생성</button>
-      </div>
+      <Button onClickFunc={handleControlModal}>새 목표 생성</Button>
     </Style.ButtonContainer>
   );
 };

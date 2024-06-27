@@ -12,6 +12,7 @@ import { handleRequestObjectList } from "../../api/object/list";
 import { handleRequestAddTodo } from "../../api/todo/add";
 import { ObjectInferface, TodoInterface } from "../../types/object";
 import { ObjectQueryResult } from "../../types/queryResult/objectList";
+import Button from "../../components/common/button/button";
 
 const Home = () => {
   /** 현재 선택된 연-월 => 월 별 목표 리스트 서버 호출 */
@@ -192,9 +193,8 @@ const Home = () => {
             }
           }}
         />
-        <div onClick={handleAddObject}>
-          <button>생성</button>
-        </div>
+
+        <Button onClickFunc={handleAddObject}>생성</Button>
       </CenterModal>
       <Style.Container>
         <CalendarComponent

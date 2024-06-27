@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TodoInterface } from "../../../types/object";
+import Button from "../../common/button/button";
 
 const Object = ({
   id,
@@ -8,6 +9,7 @@ const Object = ({
   isAddingTodo,
   handleChangeAddingTodoMode,
   handleAddTodo,
+  index,
 }: {
   id: number;
   name: string;
@@ -15,6 +17,7 @@ const Object = ({
   isAddingTodo: boolean;
   handleChangeAddingTodoMode: (objectId: number) => void;
   handleAddTodo: (objectId: number, toDo: TodoInterface) => void;
+  index: number;
 }) => {
   /** 클릭시 할입 입력 필드를 생성 및 활성화하는 함수 */
   const handleClickObject = (objectId: number) => {
@@ -55,9 +58,9 @@ const Object = ({
   }, [isAddingTodo]);
   return (
     <div>
-      <button onClick={() => handleClickObject(id)}>
-        <span>{name}</span>
-      </button>
+      <Button onClickFunc={() => handleClickObject(id)} index={index}>
+        {name}
+      </Button>
       <div>
         {toDoList.map((toDo: TodoInterface) => (
           <div key={toDo.id}>

@@ -18,17 +18,20 @@ const Todo = ({
     <Style.TodoContainer>
       <AddNewObject handleControlModal={handleControlModal} />
 
-      {objectList.map((object: ObjectInferface) => (
-        <Object
-          key={object.id}
-          id={object.id}
-          name={object.name}
-          toDoList={object.toDoList}
-          isAddingTodo={object.isAddingTodo}
-          handleChangeAddingTodoMode={handleChangeAddingTodoMode}
-          handleAddTodo={handleAddTodo}
-        />
-      ))}
+      <Style.ObjectListContainer>
+        {objectList.map((object: ObjectInferface, index: number) => (
+          <Object
+            key={object.id}
+            id={object.id}
+            name={object.name}
+            toDoList={object.toDoList}
+            isAddingTodo={object.isAddingTodo}
+            handleChangeAddingTodoMode={handleChangeAddingTodoMode}
+            handleAddTodo={handleAddTodo}
+            index={index}
+          />
+        ))}
+      </Style.ObjectListContainer>
     </Style.TodoContainer>
   );
 };
