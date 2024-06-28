@@ -29,7 +29,7 @@ const ModalWindow = styled.div`
   position: relative;
   margin-bottom: 350px;
   border-radius: 10px;
-  background: white;
+  background: ${(props) => props.theme.modalBgColor};
   padding: 40px 30px 30px 30px;
   animation: modaldown 0.3s linear;
   z-index: 1001; /* 모달 배경이 컨테이너 뒤에 위치하도록 설정 */
@@ -47,7 +47,7 @@ const ModalWindow = styled.div`
 
   .close {
     position: absolute;
-    right: 5px;
+    right: 10px;
     top: -15px;
     cursor: pointer;
     font-size: 25px;

@@ -9,6 +9,7 @@ const ButtonBox = styled.div<{ $fontColor?: string }>`
 
   button {
     background: inherit;
+    font-size: 15px;
     border: none;
     cursor: pointer;
     font-weight: ${(props) => (props.$fontColor ? 700 : 700)};

@@ -5,11 +5,13 @@ const theme: DefaultTheme = {
     backgroundColor: "#95D2B3",
     fontColor: "#222222",
     buttonBgColor: "#dbead5",
+    modalBgColor: "white",
   },
   dark: {
-    backgroundColor: "black",
+    backgroundColor: "#121212",
     fontColor: "white",
     buttonBgColor: "#212529",
+    modalBgColor: "#162A46",
   },
   objectFontColor: {
     first: "#7367F0",

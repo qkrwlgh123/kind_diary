@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TodoInterface } from "../../../types/object";
 import Button from "../../common/button/button";
+import Style from "./object.style";
+import TodoComponent from "./toDoComponent/toDoComponent";
+import { getFontColor } from "../../../utils/colorUtils";
 
 const Object = ({
   id,
@@ -62,20 +65,25 @@ const Object = ({
         {name}
       </Button>
       <div>
-        {toDoList.map((toDo: TodoInterface) => (
-          <div key={toDo.id}>
-            <span>{toDo.name}</span>
-          </div>
-        ))}
-        {isAddingTodo && (
-          <input
+        <Style.TodoListContainer>
+          {toDoList.map((toDo: TodoInterface) => (
+            <TodoComponent key={toDo.id} name={toDo.name} />
+          ))}
+        </Style.TodoListContainer>
+        <Style.InputTodoBox>
+          <Style.InputTodo
+            isAddingTodo={isAddingTodo}
             ref={inputRef}
             value={typedTodo}
             onChange={handleTypingTodo}
-            placeholder="할일 입력"
+            placeholder="할 일 입력"
             onKeyDown={handlePressEnter}
           />
-        )}
+          <Style.InputTodoBorder
+            isAddingTodo={isAddingTodo}
+            $fontColor={getFontColor(index)}
+          />
+        </Style.InputTodoBox>
       </div>
     </div>
   );
