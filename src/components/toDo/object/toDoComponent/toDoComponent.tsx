@@ -15,7 +15,6 @@ const TodoComponent = ({
   handleCompleteTodo: (todoId: number) => void;
   isCompleted?: boolean;
 }) => {
-  console.log(id);
   return (
     <Style.ComponentContainer>
       <Style.LeftAreaContainer>

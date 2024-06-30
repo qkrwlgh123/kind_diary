@@ -82,7 +82,7 @@ const Object = ({
         </Style.TodoListContainer>
         <Style.InputTodoBox>
           <Style.InputTodo
-            isAddingTodo={isAddingTodo}
+            $isAddingTodo={isAddingTodo}
             ref={inputRef}
             value={typedTodo}
             onChange={handleTypingTodo}
@@ -90,7 +90,7 @@ const Object = ({
             onKeyDown={handlePressEnter}
           />
           <Style.InputTodoBorder
-            isAddingTodo={isAddingTodo}
+            $isAddingTodo={isAddingTodo}
             $fontColor={getFontColor(index)}
           />
         </Style.InputTodoBox>
