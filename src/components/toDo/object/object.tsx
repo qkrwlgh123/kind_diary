@@ -12,6 +12,7 @@ const Object = ({
   isAddingTodo,
   handleChangeAddingTodoMode,
   handleAddTodo,
+  handleCompleteTodo,
   index,
 }: {
   id: number;
@@ -20,6 +21,7 @@ const Object = ({
   isAddingTodo: boolean;
   handleChangeAddingTodoMode: (objectId: number) => void;
   handleAddTodo: (objectId: number, toDo: TodoInterface) => void;
+  handleCompleteTodo: (todoId: number) => void;
   index: number;
 }) => {
   /** 클릭시 할입 입력 필드를 생성 및 활성화하는 함수 */
@@ -59,6 +61,7 @@ const Object = ({
       inputRef.current.focus();
     }
   }, [isAddingTodo]);
+
   return (
     <div>
       <Button onClickFunc={() => handleClickObject(id)} index={index}>
@@ -67,7 +70,14 @@ const Object = ({
       <div>
         <Style.TodoListContainer>
           {toDoList.map((toDo: TodoInterface) => (
-            <TodoComponent key={toDo.id} name={toDo.name} />
+            <TodoComponent
+              key={toDo.id}
+              id={toDo.id}
+              name={toDo.name}
+              isCompleted={toDo.isCompleted}
+              handleCompleteTodo={handleCompleteTodo}
+              objectColor={getFontColor(index)}
+            />
           ))}
         </Style.TodoListContainer>
         <Style.InputTodoBox>

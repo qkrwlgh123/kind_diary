@@ -1,12 +1,31 @@
 import Style from "./toDoComponent.style";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { FaRegSmile } from "react-icons/fa";
 
-const TodoComponent = ({ name }: { name: string }) => {
+const TodoComponent = ({
+  id,
+  name,
+  objectColor,
+  handleCompleteTodo,
+  isCompleted,
+}: {
+  id: number | undefined;
+  name: string;
+  objectColor: string;
+  handleCompleteTodo: (todoId: number) => void;
+  isCompleted?: boolean;
+}) => {
+  console.log(id);
   return (
     <Style.ComponentContainer>
       <Style.LeftAreaContainer>
-        <Style.CheckBox>
-          <input type="checkbox" />
+        <Style.CheckBox
+          $objectColor={objectColor}
+          onClick={() => {
+            if (id) handleCompleteTodo(id);
+          }}
+        >
+          {isCompleted && <FaRegSmile />}
         </Style.CheckBox>
         <div>
           <span>{name}</span>

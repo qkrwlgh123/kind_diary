@@ -2,6 +2,7 @@ interface Todo {
   id: number;
   name: string;
   object_id: number;
+  isCompleted: boolean;
   createdAt: string;
 }
 

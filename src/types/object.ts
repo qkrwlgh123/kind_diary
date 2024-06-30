@@ -8,4 +8,5 @@ export interface ObjectInferface {
 export interface TodoInterface {
   id?: number;
   name: string;
+  isCompleted?: boolean;
 }

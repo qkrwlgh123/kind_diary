@@ -13,6 +13,7 @@ import { handleRequestAddTodo } from "../../api/todo/add";
 import { ObjectInferface, TodoInterface } from "../../types/object";
 import { ObjectQueryResult } from "../../types/queryResult/objectList";
 import Button from "../../components/common/button/button";
+import { handleRequestCompleteTodo } from "../../api/todo/complete";
 
 const Home = () => {
   /** 현재 선택된 연-월 => 월 별 목표 리스트 서버 호출 */
@@ -78,15 +79,8 @@ const Home = () => {
     );
 
     if (requestResult) {
-      setObjectList((prev: ObjectInferface[]) => [
-        ...prev,
-        {
-          id: requestResult.data.id,
-          name: typedObject,
-          toDoList: [],
-          isAddingTodo: false,
-        },
-      ]);
+      const objectList = await handleRequestObjectList(currentMonth);
+      setWholeObjectList(objectList.data);
 
       setTypedObject("");
       handleControlModal();
@@ -111,23 +105,21 @@ const Home = () => {
   const handleAddTodo = async (objectId: number, toDo: TodoInterface) => {
     const requestResult = await handleRequestAddTodo(objectId, toDo.name);
 
+    /** 할일 완료 요청 성공 시, 월별 목표 리스트 호출 및 갱신 */
     if (requestResult) {
-      const updatedObjectList = objectList.map((object) => {
-        if (object.id === objectId) {
-          return {
-            ...object,
-            toDoList: [
-              ...object.toDoList,
-              { id: requestResult.data.id, name: requestResult.data.name },
-            ],
-          };
-        } else if (object.isAddingTodo) {
-          return { ...object };
-        }
-        return object;
-      });
+      const objectList = await handleRequestObjectList(currentMonth);
+      setWholeObjectList(objectList.data);
+    }
+  };
 
-      setObjectList(updatedObjectList);
+  /** 할일 완료 함수 */
+  const handleCompleteTodo = async (todoId: number) => {
+    const requestCompleteTodoResult = await handleRequestCompleteTodo(todoId);
+
+    /** 할일 완료 요청 성공 시, 월별 목표 리스트 호출 및 갱신 */
+    if (requestCompleteTodoResult) {
+      const objectList = await handleRequestObjectList(currentMonth);
+      setWholeObjectList(objectList.data);
     }
   };
 
@@ -170,6 +162,7 @@ const Home = () => {
       }));
     setObjectList(filteredData);
   }, [wholeObjectList, currentDate]);
+
   return (
     <>
       <CenterModal
@@ -207,6 +200,7 @@ const Home = () => {
           objectList={objectList}
           handleChangeAddingTodoMode={handleChangeAddingTodoMode}
           handleAddTodo={handleAddTodo}
+          handleCompleteTodo={handleCompleteTodo}
         />
       </Style.Container>
     </>
