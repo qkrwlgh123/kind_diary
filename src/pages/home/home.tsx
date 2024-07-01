@@ -14,6 +14,7 @@ import { ObjectInferface, TodoInterface } from "../../types/object";
 import { ObjectQueryResult } from "../../types/queryResult/objectList";
 import Button from "../../components/common/button/button";
 import { handleRequestCompleteTodo } from "../../api/todo/complete";
+import BottomModal from "../../components/common/modal/bottom/bottomModal";
 
 const Home = () => {
   /** 현재 선택된 연-월 => 월 별 목표 리스트 서버 호출 */
@@ -37,11 +38,19 @@ const Home = () => {
   };
 
   /** 새 목표 생성 Modal on, off 상태 */
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCenterModalOpen, setIsCenterModalOpen] = useState(false);
 
   /** 새 목표 생성 Modal on, off control 함수 */
   const handleControlModal = () => {
-    setIsModalOpen((prev) => !prev);
+    setIsCenterModalOpen((prev) => !prev);
+  };
+
+  /** 할일, 목표 수정 Modal on, off 상태 */
+  const [isBottomModalOpen, setIsBottomModalOpen] = useState(false);
+
+  /** 할일, 목표 수정 Modal on, off control 함수 */
+  const handleControlBottomModal = () => {
+    setIsBottomModalOpen((prev) => !prev);
   };
 
   /** 선택 월에 해당하는 모든 목표 리스트 */
@@ -54,6 +63,9 @@ const Home = () => {
 
   /** 현재 입력중인 목표 */
   const [typedObject, setTypedObject] = useState("");
+
+  /** 최근 추가된 할일의 상위 목표 id */
+  const [parentObjectOfRecentTodo, setParentObjectOfRecentTodo] = useState(0);
 
   /** 목표 입력 함수 */
   const handleTypingObject = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,10 +117,11 @@ const Home = () => {
   const handleAddTodo = async (objectId: number, toDo: TodoInterface) => {
     const requestResult = await handleRequestAddTodo(objectId, toDo.name);
 
-    /** 할일 완료 요청 성공 시, 월별 목표 리스트 호출 및 갱신 */
+    /** 할일 완료 요청 성공 시, 월별 목표 리스트 호출 및 갱신, 가장 최근 추가된 목표 id 갱신 */
     if (requestResult) {
       const objectList = await handleRequestObjectList(currentMonth);
       setWholeObjectList(objectList.data);
+      setParentObjectOfRecentTodo(objectId);
     }
   };
 
@@ -128,10 +141,10 @@ const Home = () => {
 
   /** 모달이 열렸을 때 input 창에 포커스 설정 */
   useEffect(() => {
-    if (isModalOpen && inputRef.current) {
+    if (isCenterModalOpen && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [isModalOpen]);
+  }, [isCenterModalOpen]);
 
   /** 연-월 변경에 따른 목표 리스트 호출 */
   useEffect(() => {
@@ -148,25 +161,37 @@ const Home = () => {
 
   /** 현재 날짜 변경에 따라 목표 리스트 업데이트 */
   useEffect(() => {
-    // createdAt 날짜가 오늘 날짜와 같은 데이터 필터링
+    // date가 오늘 날짜(currentDate)와 같은 데이터 필터링
     const filteredData = wholeObjectList
       .filter((item) => {
         const itemDate = item.date;
         return itemDate === currentDate;
       })
-      .map((object) => ({
-        id: object.id,
-        name: object.object,
-        toDoList: object.toDos,
-        isAddingTodo: false,
-      }));
+      .map((object) => {
+        if (object.id === parentObjectOfRecentTodo) {
+          return {
+            id: object.id,
+            name: object.object,
+            toDoList: object.toDos,
+            isAddingTodo: true,
+          };
+        } else {
+          return {
+            id: object.id,
+            name: object.object,
+            toDoList: object.toDos,
+            isAddingTodo: false,
+          };
+        }
+      });
+
     setObjectList(filteredData);
   }, [wholeObjectList, currentDate]);
 
   return (
     <>
       <CenterModal
-        display={isModalOpen ? "flex" : "none"}
+        display={isCenterModalOpen ? "flex" : "none"}
         controlFunc={handleControlModal}
       >
         <div>
@@ -197,12 +222,20 @@ const Home = () => {
         />
         <Todo
           handleControlModal={handleControlModal}
+          handleControlBottomModal={handleControlBottomModal}
           objectList={objectList}
           handleChangeAddingTodoMode={handleChangeAddingTodoMode}
           handleAddTodo={handleAddTodo}
           handleCompleteTodo={handleCompleteTodo}
         />
       </Style.Container>
+
+      <BottomModal
+        display={isBottomModalOpen ? "flex" : "none"}
+        controlFunc={handleControlBottomModal}
+      >
+        <div>바텀 모달 테스트으으</div>
+      </BottomModal>
     </>
   );
 };

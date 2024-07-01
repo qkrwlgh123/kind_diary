@@ -6,7 +6,7 @@ const TodoContainer = styled.div`
 `;
 
 const ObjectListContainer = styled.div`
-  gap: 30px;
+  gap: 10px;
   display: flex;
   flex-direction: column;
 `;

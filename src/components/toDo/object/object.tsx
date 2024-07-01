@@ -8,6 +8,7 @@ import { getFontColor } from "../../../utils/colorUtils";
 const Object = ({
   id,
   name,
+  handleControlBottomModal,
   toDoList,
   isAddingTodo,
   handleChangeAddingTodoMode,
@@ -17,6 +18,7 @@ const Object = ({
 }: {
   id: number;
   name: string;
+  handleControlBottomModal: () => void;
   toDoList: TodoInterface[];
   isAddingTodo: boolean;
   handleChangeAddingTodoMode: (objectId: number) => void;
@@ -74,6 +76,7 @@ const Object = ({
               key={toDo.id}
               id={toDo.id}
               name={toDo.name}
+              handleControlBottomModal={handleControlBottomModal}
               isCompleted={toDo.isCompleted}
               handleCompleteTodo={handleCompleteTodo}
               objectColor={getFontColor(index)}

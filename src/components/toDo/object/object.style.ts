@@ -19,7 +19,7 @@ const InputTodo = styled.input<{ $isAddingTodo: boolean }>`
   outline: none;
   padding-bottom: 10px;
   font-size: 16px;
-
+  width: 75%;
   color: ${(props) => props.theme.fontColor};
   transition: border-bottom 500s ease;
 `;

@@ -11,7 +11,7 @@ const theme: DefaultTheme = {
     backgroundColor: "#121212",
     fontColor: "white",
     buttonBgColor: "#212529",
-    modalBgColor: "#162A46",
+    modalBgColor: "#282828",
   },
   objectFontColor: {
     first: "#7367F0",

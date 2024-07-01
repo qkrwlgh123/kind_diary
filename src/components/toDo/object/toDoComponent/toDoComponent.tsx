@@ -5,12 +5,14 @@ import { FaRegSmile } from "react-icons/fa";
 const TodoComponent = ({
   id,
   name,
+  handleControlBottomModal,
   objectColor,
   handleCompleteTodo,
   isCompleted,
 }: {
   id: number | undefined;
   name: string;
+  handleControlBottomModal: () => void;
   objectColor: string;
   handleCompleteTodo: (todoId: number) => void;
   isCompleted?: boolean;
@@ -30,7 +32,7 @@ const TodoComponent = ({
           <span>{name}</span>
         </div>
       </Style.LeftAreaContainer>
-      <Style.DotsIconBox>
+      <Style.DotsIconBox onClick={handleControlBottomModal}>
         <HiOutlineDotsHorizontal />
       </Style.DotsIconBox>
     </Style.ComponentContainer>
