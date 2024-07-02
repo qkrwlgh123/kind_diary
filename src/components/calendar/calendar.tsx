@@ -58,6 +58,9 @@ const CalendarComponent = ({
           />
         )}
         calendarType="gregory"
+        formatDay={(locale: string | undefined, date: Date) =>
+          String(date.getDate())
+        }
       />
     </Style.CalendarContainer>
   );
