@@ -9,21 +9,29 @@ const Object = ({
   id,
   name,
   handleControlBottomModal,
+  handleClickMenuboxInTodoComponent,
   toDoList,
   isAddingTodo,
   handleChangeAddingTodoMode,
   handleAddTodo,
   handleCompleteTodo,
+
   index,
 }: {
   id: number;
   name: string;
   handleControlBottomModal: () => void;
+  handleClickMenuboxInTodoComponent: ({
+    id,
+    name,
+    isCompleted,
+  }: TodoInterface) => void;
   toDoList: TodoInterface[];
   isAddingTodo: boolean;
   handleChangeAddingTodoMode: (objectId: number) => void;
   handleAddTodo: (objectId: number, toDo: TodoInterface) => void;
   handleCompleteTodo: (todoId: number) => void;
+
   index: number;
 }) => {
   /** 클릭시 할입 입력 필드를 생성 및 활성화하는 함수 */
@@ -77,6 +85,9 @@ const Object = ({
               id={toDo.id}
               name={toDo.name}
               handleControlBottomModal={handleControlBottomModal}
+              handleClickMenuboxInTodoComponent={
+                handleClickMenuboxInTodoComponent
+              }
               isCompleted={toDo.isCompleted}
               handleCompleteTodo={handleCompleteTodo}
               objectColor={getFontColor(index)}

@@ -15,6 +15,8 @@ import { ObjectQueryResult } from "../../types/queryResult/objectList";
 import Button from "../../components/common/button/button";
 import { handleRequestCompleteTodo } from "../../api/todo/complete";
 import BottomModal from "../../components/common/modal/bottom/bottomModal";
+import { handleRequestUncompleteTodo } from "../../api/todo/unComplete";
+import { handleRequestDeleteTodo } from "../../api/todo/delete";
 
 const Home = () => {
   /** 현재 선택된 연-월 => 월 별 목표 리스트 서버 호출 */
@@ -76,6 +78,18 @@ const Home = () => {
   /** 선택 일자에 해당하는 목표 리스트 */
   const [objectList, setObjectList] = useState<ObjectInferface[]>([]);
 
+  /** 메뉴박스를 클릭하여 선택한 Todo */
+  const [selectedTodo, setSelectedTodo] = useState<TodoInterface>();
+
+  /** 메뉴박스를 클릭하여 Todo 정보를 가져오는 함수 */
+  const handleClickMenuboxInTodoComponent = ({
+    id,
+    name,
+    isCompleted,
+  }: TodoInterface) => {
+    setSelectedTodo({ id, name, isCompleted });
+  };
+
   /** 현재 입력중인 목표 */
   const [typedObject, setTypedObject] = useState("");
 
@@ -114,7 +128,7 @@ const Home = () => {
     }
   };
 
-  /** 오브젝트의 할일 추가 모드 컨트롤 함수 */
+  /** 목표의 할일 추가 모드 컨트롤 함수 */
   const handleChangeAddingTodoMode = (objectId: number) => {
     const updatedObjectList = objectList.map((object) => {
       if (object.id === objectId) {
@@ -148,6 +162,46 @@ const Home = () => {
     if (requestCompleteTodoResult) {
       const objectList = await handleRequestObjectList(currentMonth);
       setWholeObjectList(objectList.data);
+    }
+  };
+
+  /** 할일 미완료 함수 */
+  const handleUncompleteTodo = async (todoId: number) => {
+    const requestUncompleteTodoResult = await handleRequestUncompleteTodo(
+      todoId
+    );
+
+    /** 할일 미완료 요청 성공 시, 월별 목표 리스트 호출 및 갱신 */
+    if (requestUncompleteTodoResult) {
+      const objectList = await handleRequestObjectList(currentMonth);
+      setWholeObjectList(objectList.data);
+      handleControlBottomModal();
+    }
+  };
+
+  /** 할일 수정 함수 */
+  // const handleChangeUpdatingTodoMode = (todoId: number) => {
+  //   const updatedObjectList = objectList.map((object) => {
+  //     if (object.id === objectId) {
+  //       return { ...object, isAddingTodo: !object.isAddingTodo };
+  //     } else if (object.isAddingTodo) {
+  //       return { ...object, isAddingTodo: false };
+  //     }
+  //     return object;
+  //   });
+
+  //   setObjectList(updatedObjectList);
+  // };
+
+  /** 할일 삭제 함수 */
+  const handleDeleteTodo = async (todoId: number) => {
+    const requestDeleteTodoResult = await handleRequestDeleteTodo(todoId);
+
+    /** 할일 삭제 요청 성공 시, 월별 목표 리스트 호출 및 갱신 */
+    if (requestDeleteTodoResult) {
+      const objectList = await handleRequestObjectList(currentMonth);
+      setWholeObjectList(objectList.data);
+      handleControlBottomModal();
     }
   };
 
@@ -204,6 +258,7 @@ const Home = () => {
             name: object.object,
             toDoList: object.toDos,
             isAddingTodo: true,
+            isUpdatingTodo: false,
           };
         } else {
           return {
@@ -211,6 +266,7 @@ const Home = () => {
             name: object.object,
             toDoList: object.toDos,
             isAddingTodo: false,
+            isUpdatingTodo: false,
           };
         }
       });
@@ -257,6 +313,7 @@ const Home = () => {
         <Todo
           handleControlModal={handleControlModal}
           handleControlBottomModal={handleControlBottomModal}
+          handleClickMenuboxInTodoComponent={handleClickMenuboxInTodoComponent}
           objectList={objectList}
           handleChangeAddingTodoMode={handleChangeAddingTodoMode}
           handleAddTodo={handleAddTodo}
@@ -268,7 +325,28 @@ const Home = () => {
         display={isBottomModalOpen ? "flex" : "none"}
         controlFunc={handleControlBottomModal}
       >
-        <div>바텀 모달 테스트으으</div>
+        <Style.BottonModalTitle>{selectedTodo?.name}</Style.BottonModalTitle>
+        <Style.ButtonsContainer>
+          <Style.TodoFuncButton>수정하기</Style.TodoFuncButton>
+          <Style.TodoFuncButton
+            onClick={() => {
+              if (selectedTodo?.id) handleDeleteTodo(selectedTodo.id);
+            }}
+          >
+            삭제하기
+          </Style.TodoFuncButton>
+        </Style.ButtonsContainer>
+        <Style.BottomModalListContainer>
+          {selectedTodo?.isCompleted && (
+            <div
+              onClick={() => {
+                if (selectedTodo?.id) handleUncompleteTodo(selectedTodo.id);
+              }}
+            >
+              <span>할일 미완료 처리</span>
+            </div>
+          )}
+        </Style.BottomModalListContainer>
       </BottomModal>
     </>
   );

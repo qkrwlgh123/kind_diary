@@ -6,6 +6,7 @@ import Style from "./toDo.style";
 const Todo = ({
   handleControlModal,
   handleControlBottomModal,
+  handleClickMenuboxInTodoComponent,
   objectList,
   handleChangeAddingTodoMode,
   handleAddTodo,
@@ -13,6 +14,11 @@ const Todo = ({
 }: {
   handleControlModal: () => void;
   handleControlBottomModal: () => void;
+  handleClickMenuboxInTodoComponent: ({
+    id,
+    name,
+    isCompleted,
+  }: TodoInterface) => void;
   objectList: ObjectInferface[];
   handleChangeAddingTodoMode: (objectId: number) => void;
   handleAddTodo: (objectId: number, toDo: TodoInterface) => void;
@@ -29,6 +35,9 @@ const Todo = ({
             id={object.id}
             name={object.name}
             handleControlBottomModal={handleControlBottomModal}
+            handleClickMenuboxInTodoComponent={
+              handleClickMenuboxInTodoComponent
+            }
             toDoList={object.toDoList}
             isAddingTodo={object.isAddingTodo}
             handleChangeAddingTodoMode={handleChangeAddingTodoMode}
