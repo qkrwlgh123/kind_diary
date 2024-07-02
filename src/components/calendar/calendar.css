@@ -6,3 +6,9 @@
   color: black;
   width: 100%;
 }
+
+.react-calendar__tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
