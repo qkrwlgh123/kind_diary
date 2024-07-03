@@ -10,6 +10,7 @@ const Todo = ({
   objectList,
   handleChangeAddingTodoMode,
   handleAddTodo,
+  handleUpdateTodo,
   handleCompleteTodo,
 }: {
   handleControlModal: () => void;
@@ -22,6 +23,7 @@ const Todo = ({
   objectList: ObjectInferface[];
   handleChangeAddingTodoMode: (objectId: number) => void;
   handleAddTodo: (objectId: number, toDo: TodoInterface) => void;
+  handleUpdateTodo: (todoId: number, name: string) => void;
   handleCompleteTodo: (todoId: number) => void;
 }) => {
   return (
@@ -42,6 +44,7 @@ const Todo = ({
             isAddingTodo={object.isAddingTodo}
             handleChangeAddingTodoMode={handleChangeAddingTodoMode}
             handleAddTodo={handleAddTodo}
+            handleUpdateTodo={handleUpdateTodo}
             handleCompleteTodo={handleCompleteTodo}
             index={index}
           />

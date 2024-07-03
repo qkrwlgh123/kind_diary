@@ -12,8 +12,8 @@ const InputTodoBox = styled.div`
   margin-top: 7px;
 `;
 
-const InputTodo = styled.input<{ $isAddingTodo: boolean }>`
-  display: ${(props) => (props.$isAddingTodo ? "flex" : "none")};
+const InputTodo = styled.input<{ $isVisible: boolean }>`
+  display: ${(props) => (props.$isVisible ? "flex" : "none")};
   background: inherit;
   border: none;
   outline: none;
@@ -25,18 +25,22 @@ const InputTodo = styled.input<{ $isAddingTodo: boolean }>`
 `;
 
 const InputTodoBorder = styled.span<{
-  $isAddingTodo: boolean;
+  $isVisible: boolean;
   $fontColor: string;
 }>`
-  opacity: ${(props) => (props.$isAddingTodo ? "1" : "0")};
+  opacity: ${(props) => (props.$isVisible ? "1" : "0")};
   position: absolute;
   content: "";
   height: 2px;
   background: ${(props) => props.$fontColor};
   width: 75%;
   bottom: -5px;
-  transition: ${(props) =>
-    props.$isAddingTodo ? "opacity 1.5s ease" : "none"};
+  transition: ${(props) => (props.$isVisible ? "opacity 1.5s ease" : "none")};
 `;
 
-export default { TodoListContainer, InputTodoBox, InputTodo, InputTodoBorder };
+export default {
+  TodoListContainer,
+  InputTodoBox,
+  InputTodo,
+  InputTodoBorder,
+};

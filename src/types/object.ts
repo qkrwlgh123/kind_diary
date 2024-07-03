@@ -3,11 +3,12 @@ export interface ObjectInferface {
   name: string;
   toDoList: TodoInterface[];
   isAddingTodo: boolean;
-  isUpdatingTodo: boolean;
 }
 
 export interface TodoInterface {
   id?: number;
   name: string;
+  object_id?: number;
   isCompleted?: boolean;
+  isUpdatingTodo?: boolean;
 }

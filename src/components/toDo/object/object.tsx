@@ -14,6 +14,7 @@ const Object = ({
   isAddingTodo,
   handleChangeAddingTodoMode,
   handleAddTodo,
+  handleUpdateTodo,
   handleCompleteTodo,
 
   index,
@@ -30,6 +31,7 @@ const Object = ({
   isAddingTodo: boolean;
   handleChangeAddingTodoMode: (objectId: number) => void;
   handleAddTodo: (objectId: number, toDo: TodoInterface) => void;
+  handleUpdateTodo: (todoId: number, name: string) => void;
   handleCompleteTodo: (todoId: number) => void;
 
   index: number;
@@ -47,17 +49,41 @@ const Object = ({
     setTypedTodo(event.target.value);
   };
 
-  /** 입력 중 엔터키 누를 시 할일이 추가되는 함수 */
+  /** 수정을 위한 입력 중인 할일 */
+  const [typedTodoForUpdate, setTypedTodoForUpdate] = useState("");
+
+  /** 할일 수정을 위한 입력 함수 */
+  const handleTypingTodoForUpdate = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setTypedTodoForUpdate(event.target.value);
+  };
+
+  /** 입력 중 엔터키 누를 시 할일이 추가 또는 수정되는 함수 */
   const handlePressEnter = (event: React.KeyboardEvent) => {
     if (event.nativeEvent.isComposing) {
       return;
     }
 
     if (event.key === "Enter") {
-      if (toDoList.map((todo) => todo.name).includes(typedTodo)) {
-        alert("중복된 할일이 존재합니다.");
+      if (
+        toDoList
+          .map((todo) => todo.name)
+          .includes(typedTodo || typedTodoForUpdate)
+      ) {
+        alert("이미 존재하는 할일입니다.");
         return;
       }
+
+      /** 할일 수정일 시 */
+      const todoId = toDoList.find((todo) => todo.isUpdatingTodo === true)?.id;
+      if (todoId) {
+        handleUpdateTodo(todoId, typedTodoForUpdate);
+        setTypedTodoForUpdate("");
+        return;
+      }
+
+      /** 할일 추가일 시 */
       handleAddTodo(id, { name: typedTodo });
       setTypedTodo("");
     }
@@ -65,12 +91,25 @@ const Object = ({
 
   /** Input 창에 대한 참조 생성 */
   const inputRef = useRef<HTMLInputElement>(null);
+  const updatedIntpuRef = useRef<HTMLInputElement>(null);
 
+  /** 할일 추가 모드 시 effect */
   useEffect(() => {
     if (isAddingTodo && inputRef.current) {
       inputRef.current.focus();
     }
   }, [isAddingTodo]);
+
+  /** 할일 수정 모드 시 effect */
+  useEffect(() => {
+    if (updatedIntpuRef.current) {
+      updatedIntpuRef.current.focus();
+    }
+    const updatingTodo = toDoList.find((todo) => todo.isUpdatingTodo);
+    if (updatingTodo) {
+      setTypedTodoForUpdate(updatingTodo.name);
+    }
+  }, [toDoList]);
 
   return (
     <div>
@@ -79,24 +118,41 @@ const Object = ({
       </Button>
       <div>
         <Style.TodoListContainer>
-          {toDoList.map((toDo: TodoInterface) => (
-            <TodoComponent
-              key={toDo.id}
-              id={toDo.id}
-              name={toDo.name}
-              handleControlBottomModal={handleControlBottomModal}
-              handleClickMenuboxInTodoComponent={
-                handleClickMenuboxInTodoComponent
-              }
-              isCompleted={toDo.isCompleted}
-              handleCompleteTodo={handleCompleteTodo}
-              objectColor={getFontColor(index)}
-            />
-          ))}
+          {toDoList.map((toDo: TodoInterface) =>
+            toDo.isUpdatingTodo ? (
+              <Style.InputTodoBox key={toDo.id}>
+                <Style.InputTodo
+                  $isVisible={toDo.isUpdatingTodo}
+                  ref={updatedIntpuRef}
+                  value={typedTodoForUpdate}
+                  onChange={handleTypingTodoForUpdate}
+                  placeholder="할 일 입력"
+                  onKeyDown={handlePressEnter}
+                />
+                <Style.InputTodoBorder
+                  $isVisible={toDo.isUpdatingTodo}
+                  $fontColor={getFontColor(index)}
+                />
+              </Style.InputTodoBox>
+            ) : (
+              <TodoComponent
+                key={toDo.id}
+                id={toDo.id}
+                name={toDo.name}
+                handleControlBottomModal={handleControlBottomModal}
+                handleClickMenuboxInTodoComponent={
+                  handleClickMenuboxInTodoComponent
+                }
+                isCompleted={toDo.isCompleted}
+                handleCompleteTodo={handleCompleteTodo}
+                objectColor={getFontColor(index)}
+              />
+            )
+          )}
         </Style.TodoListContainer>
         <Style.InputTodoBox>
           <Style.InputTodo
-            $isAddingTodo={isAddingTodo}
+            $isVisible={isAddingTodo}
             ref={inputRef}
             value={typedTodo}
             onChange={handleTypingTodo}
@@ -104,7 +160,7 @@ const Object = ({
             onKeyDown={handlePressEnter}
           />
           <Style.InputTodoBorder
-            $isAddingTodo={isAddingTodo}
+            $isVisible={isAddingTodo}
             $fontColor={getFontColor(index)}
           />
         </Style.InputTodoBox>

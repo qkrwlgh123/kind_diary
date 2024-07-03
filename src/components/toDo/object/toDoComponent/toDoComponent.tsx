@@ -24,7 +24,7 @@ const TodoComponent = ({
   handleCompleteTodo: (todoId: number) => void;
   isCompleted?: boolean;
 }) => {
-  /**  */
+  /** 메뉴박스 클릭 함수 */
   const handleClickDotsIconBox = () => {
     handleControlBottomModal();
     handleClickMenuboxInTodoComponent({ id, name, isCompleted });

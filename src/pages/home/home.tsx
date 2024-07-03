@@ -17,6 +17,7 @@ import { handleRequestCompleteTodo } from "../../api/todo/complete";
 import BottomModal from "../../components/common/modal/bottom/bottomModal";
 import { handleRequestUncompleteTodo } from "../../api/todo/unComplete";
 import { handleRequestDeleteTodo } from "../../api/todo/delete";
+import { handleRequestUpdateTodo } from "../../api/todo/update";
 
 const Home = () => {
   /** 현재 선택된 연-월 => 월 별 목표 리스트 서버 호출 */
@@ -132,14 +133,67 @@ const Home = () => {
   const handleChangeAddingTodoMode = (objectId: number) => {
     const updatedObjectList = objectList.map((object) => {
       if (object.id === objectId) {
-        return { ...object, isAddingTodo: !object.isAddingTodo };
+        return {
+          ...object,
+          isAddingTodo: !object.isAddingTodo,
+          toDoList: object.toDoList.map((todo) => {
+            const { isUpdatingTodo, ...rest } = todo;
+            return rest;
+          }),
+        };
       } else if (object.isAddingTodo) {
-        return { ...object, isAddingTodo: false };
+        return {
+          ...object,
+          isAddingTodo: false,
+          toDoList: object.toDoList.map((todo) => {
+            const { isUpdatingTodo, ...rest } = todo;
+            return rest;
+          }),
+        };
       }
       return object;
     });
 
     setObjectList(updatedObjectList);
+  };
+
+  /** 할일 수정 모드 컨트롤 함수 */
+  const handleChangeUpdatingTodoMode = (todoId: number) => {
+    const findObjectIdByTodoId = (
+      objectList: ObjectInferface[],
+      todoId: number
+    ) => {
+      const todoItem = objectList
+        .flatMap((obj) => obj.toDoList)
+        .find((item) => item.id === todoId);
+
+      return todoItem?.object_id;
+    };
+
+    const foundObjectId = findObjectIdByTodoId(objectList, todoId);
+
+    const updatedObjectList = objectList.map((object) => {
+      if (object.id === foundObjectId) {
+        return {
+          ...object,
+          isAddingTodo: false,
+          toDoList: object.toDoList.map((todo) => {
+            if (todo.id === todoId) {
+              if (todo.isUpdatingTodo) {
+                return todo;
+              } else {
+                return { ...todo, isUpdatingTodo: true };
+              }
+            }
+            return todo;
+          }),
+        };
+      }
+      return { ...object, isAddingTodo: false };
+    });
+
+    setObjectList(updatedObjectList);
+    handleControlBottomModal();
   };
 
   /** 할일 추가 함수 */
@@ -151,6 +205,17 @@ const Home = () => {
       const objectList = await handleRequestObjectList(currentMonth);
       setWholeObjectList(objectList.data);
       setParentObjectOfRecentTodo(objectId);
+    }
+  };
+
+  /** 할일 수정 함수 */
+  const handleUpdateTodo = async (todoId: number, name: string) => {
+    const requestResult = await handleRequestUpdateTodo(todoId, name);
+
+    /** 할일 완료 요청 성공 시, 월별 목표 리스트 호출 및 갱신, 가장 최근 추가된 목표 id 갱신 */
+    if (requestResult) {
+      const objectList = await handleRequestObjectList(currentMonth);
+      setWholeObjectList(objectList.data);
     }
   };
 
@@ -178,20 +243,6 @@ const Home = () => {
       handleControlBottomModal();
     }
   };
-
-  /** 할일 수정 함수 */
-  // const handleChangeUpdatingTodoMode = (todoId: number) => {
-  //   const updatedObjectList = objectList.map((object) => {
-  //     if (object.id === objectId) {
-  //       return { ...object, isAddingTodo: !object.isAddingTodo };
-  //     } else if (object.isAddingTodo) {
-  //       return { ...object, isAddingTodo: false };
-  //     }
-  //     return object;
-  //   });
-
-  //   setObjectList(updatedObjectList);
-  // };
 
   /** 할일 삭제 함수 */
   const handleDeleteTodo = async (todoId: number) => {
@@ -258,7 +309,6 @@ const Home = () => {
             name: object.object,
             toDoList: object.toDos,
             isAddingTodo: true,
-            isUpdatingTodo: false,
           };
         } else {
           return {
@@ -266,7 +316,6 @@ const Home = () => {
             name: object.object,
             toDoList: object.toDos,
             isAddingTodo: false,
-            isUpdatingTodo: false,
           };
         }
       });
@@ -317,6 +366,7 @@ const Home = () => {
           objectList={objectList}
           handleChangeAddingTodoMode={handleChangeAddingTodoMode}
           handleAddTodo={handleAddTodo}
+          handleUpdateTodo={handleUpdateTodo}
           handleCompleteTodo={handleCompleteTodo}
         />
       </Style.Container>
@@ -327,7 +377,14 @@ const Home = () => {
       >
         <Style.BottonModalTitle>{selectedTodo?.name}</Style.BottonModalTitle>
         <Style.ButtonsContainer>
-          <Style.TodoFuncButton>수정하기</Style.TodoFuncButton>
+          <Style.TodoFuncButton
+            onClick={() => {
+              if (selectedTodo?.id)
+                handleChangeUpdatingTodoMode(selectedTodo.id);
+            }}
+          >
+            수정하기
+          </Style.TodoFuncButton>
           <Style.TodoFuncButton
             onClick={() => {
               if (selectedTodo?.id) handleDeleteTodo(selectedTodo.id);
