@@ -19,6 +19,7 @@ const theme: DefaultTheme = {
     third: "#EA5455",
     fourth: "green",
     fifth: "purple",
+    sixth: "#744524",
   },
   commonColor: {
     white: "#ffffff",

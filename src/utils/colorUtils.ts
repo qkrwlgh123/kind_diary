@@ -13,5 +13,7 @@ export const getFontColor = (index: number) => {
       return theme.objectFontColor.fourth;
     case 4:
       return theme.objectFontColor.fifth;
+    case 5:
+      return theme.objectFontColor.sixth;
   }
 };
