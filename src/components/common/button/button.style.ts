@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import theme from "../../../styles/layout/themes";
 
-const ButtonBox = styled.div<{ $fontColor?: string }>`
+const ButtonBox = styled.div<{ $fontColor?: string; $bgColor?: string }>`
   width: fit-content;
   padding: 10px;
-  background-color: ${(props) => props.theme.buttonBgColor};
+  background-color: ${(props) =>
+    props.$bgColor ? props.$bgColor : props.theme.buttonBgColor};
   cursor: pointer;
   border-radius: 17px;
 
@@ -14,7 +16,7 @@ const ButtonBox = styled.div<{ $fontColor?: string }>`
     cursor: pointer;
     font-weight: ${(props) => (props.$fontColor ? 700 : 700)};
     color: ${(props) =>
-      props.$fontColor ? props.$fontColor : props.theme.fontColor};
+      props.$fontColor ? props.$fontColor : theme.commonColor.white};
   }
 `;
 

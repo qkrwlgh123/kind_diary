@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import CalendarComponent from "../../components/calendar/calendar";
 import Todo from "../../components/toDo/toDo";
 import Style from "./home.style";
-import CenterModal from "../../components/common/modal/center/centerModal";
 import { handleRequestAddObject } from "../../api/object/add";
 import {
   convertDateToMonthString,
@@ -12,12 +11,12 @@ import { handleRequestObjectList } from "../../api/object/list";
 import { handleRequestAddTodo } from "../../api/todo/add";
 import { ObjectInferface, TodoInterface } from "../../types/object";
 import { ObjectQueryResult } from "../../types/queryResult/objectList";
-import Button from "../../components/common/button/button";
 import { handleRequestCompleteTodo } from "../../api/todo/complete";
 import BottomModal from "../../components/common/modal/bottom/bottomModal";
 import { handleRequestUncompleteTodo } from "../../api/todo/unComplete";
 import { handleRequestDeleteTodo } from "../../api/todo/delete";
 import { handleRequestUpdateTodo } from "../../api/todo/update";
+import AddObjectModal from "../../components/modal/addObjectModal/addObjectModal";
 
 const Home = () => {
   /** 현재 선택된 연-월 => 월 별 목표 리스트 서버 호출 */
@@ -325,30 +324,16 @@ const Home = () => {
 
   return (
     <>
-      <CenterModal
-        display={isCenterModalOpen ? "flex" : "none"}
-        controlFunc={handleControlModal}
-      >
-        <div>
-          <h3>새 목표 생성</h3>
-        </div>
-        <input
-          ref={inputRef}
-          placeholder="목표 이름"
-          value={typedObject}
-          onChange={handleTypingObject}
-          onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              if (event.nativeEvent.isComposing) {
-                return;
-              }
-              handleAddObject();
-            }
-          }}
-        />
+      {/* 새 목표 생성 모달 */}
+      <AddObjectModal
+        inputRef={inputRef}
+        isCenterModalOpen={isCenterModalOpen}
+        handleControlModal={handleControlModal}
+        typedObject={typedObject}
+        handleTypingObject={handleTypingObject}
+        handleAddObject={handleAddObject}
+      />
 
-        <Button onClickFunc={handleAddObject}>생성</Button>
-      </CenterModal>
       <Style.Container>
         <CalendarComponent
           currentMonth={currentMonth}

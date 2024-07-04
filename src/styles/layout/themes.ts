@@ -20,6 +20,10 @@ const theme: DefaultTheme = {
     fourth: "green",
     fifth: "purple",
   },
+  commonColor: {
+    white: "#ffffff",
+    blue: "#3B81F6",
+  },
 };
 
 export default theme;

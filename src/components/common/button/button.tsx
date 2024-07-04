@@ -6,16 +6,22 @@ const Button = ({
   children,
   onClickFunc,
   index,
+  bgColor,
 }: {
   children: React.ReactNode;
   onClickFunc: () => void;
   index?: number;
+  bgColor?: string;
 }) => {
   let fontColor;
   if (typeof index === "number") fontColor = getFontColor(index);
 
   return (
-    <Style.ButtonBox onClick={onClickFunc} $fontColor={fontColor}>
+    <Style.ButtonBox
+      onClick={onClickFunc}
+      $fontColor={fontColor}
+      $bgColor={bgColor}
+    >
       <button>{children}</button>
     </Style.ButtonBox>
   );

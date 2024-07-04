@@ -1,6 +1,10 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+  }
+  
   body {
     background-color: ${({ theme }) => theme.backgroundColor};
     color: ${({ theme }) => theme.fontColor};
@@ -10,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
     -webkit-user-select:none;
     -moz-user-select:none;
     -ms-user-select:none;
-    user-select:none
+    user-select:none;
   }
 `;
 
