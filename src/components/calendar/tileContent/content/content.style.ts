@@ -6,6 +6,7 @@ const ContentBox = styled.div<{ color: string }>`
   padding: 1px 3px;
   border-radius: 8px;
   color: ${(props) => props.theme.fontColor};
+  width: 100%;
 `;
 
 export default { ContentBox };

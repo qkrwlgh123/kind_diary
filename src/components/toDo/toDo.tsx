@@ -1,6 +1,7 @@
 import { ObjectInferface, TodoInterface } from "../../types/object";
 import AddNewObject from "./newObject/addNewObject";
 import Object from "./object/object";
+import Placeholder from "./placeholder/placeholder";
 import Style from "./toDo.style";
 
 const Todo = ({
@@ -31,24 +32,28 @@ const Todo = ({
       <AddNewObject handleControlModal={handleControlModal} />
 
       <Style.ObjectListContainer>
-        {objectList.map((object: ObjectInferface, index: number) => (
-          <Object
-            key={object.id}
-            id={object.id}
-            name={object.name}
-            handleControlBottomModal={handleControlBottomModal}
-            handleClickMenuboxInTodoComponent={
-              handleClickMenuboxInTodoComponent
-            }
-            toDoList={object.toDoList}
-            isAddingTodo={object.isAddingTodo}
-            handleChangeAddingTodoMode={handleChangeAddingTodoMode}
-            handleAddTodo={handleAddTodo}
-            handleUpdateTodo={handleUpdateTodo}
-            handleCompleteTodo={handleCompleteTodo}
-            index={index}
-          />
-        ))}
+        {objectList && objectList.length > 0 ? (
+          objectList.map((object: ObjectInferface, index: number) => (
+            <Object
+              key={object.id}
+              id={object.id}
+              name={object.name}
+              handleControlBottomModal={handleControlBottomModal}
+              handleClickMenuboxInTodoComponent={
+                handleClickMenuboxInTodoComponent
+              }
+              toDoList={object.toDoList}
+              isAddingTodo={object.isAddingTodo}
+              handleChangeAddingTodoMode={handleChangeAddingTodoMode}
+              handleAddTodo={handleAddTodo}
+              handleUpdateTodo={handleUpdateTodo}
+              handleCompleteTodo={handleCompleteTodo}
+              index={index}
+            />
+          ))
+        ) : (
+          <Placeholder />
+        )}
       </Style.ObjectListContainer>
     </Style.TodoContainer>
   );
