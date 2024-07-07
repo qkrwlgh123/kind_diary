@@ -9,6 +9,7 @@ const Todo = ({
   handleControlBottomModal,
   handleClickMenuboxInTodoComponent,
   objectList,
+  isRequestLoading,
   handleChangeAddingTodoMode,
   handleAddTodo,
   handleUpdateTodo,
@@ -22,6 +23,7 @@ const Todo = ({
     isCompleted,
   }: TodoInterface) => void;
   objectList: ObjectInferface[];
+  isRequestLoading: boolean;
   handleChangeAddingTodoMode: (objectId: number) => void;
   handleAddTodo: (objectId: number, toDo: TodoInterface) => void;
   handleUpdateTodo: (todoId: number, name: string) => void;
@@ -32,7 +34,11 @@ const Todo = ({
       <AddNewObject handleControlModal={handleControlModal} />
 
       <Style.ObjectListContainer>
-        {objectList && objectList.length > 0 ? (
+        {isRequestLoading ? (
+          <div>
+            <span>목표 리스트를 불러오는 중입니다</span>
+          </div>
+        ) : objectList && objectList.length > 0 ? (
           objectList.map((object: ObjectInferface, index: number) => (
             <Object
               key={object.id}

@@ -19,6 +19,14 @@ import { handleRequestUpdateTodo } from "../../api/todo/update";
 import AddObjectModal from "../../components/modal/addObjectModal/addObjectModal";
 
 const Home = () => {
+  /** API 요청 응답 전 로딩 상태 */
+  const [isRequestLoading, setIsRequestLoading] = useState(false);
+
+  /** 로딩 상태 변경 함수 */
+  const handleLoadingIndicator = (value: boolean) => {
+    setIsRequestLoading(value);
+  };
+
   /** 현재 선택된 연-월 => 월 별 목표 리스트 서버 호출 */
   const [currentMonth, setCurrentMonth] = useState(
     convertDateToMonthString(new Date())
@@ -284,7 +292,10 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await handleRequestObjectList(currentMonth);
+        const result = await handleRequestObjectList(
+          currentMonth,
+          handleLoadingIndicator
+        );
         setWholeObjectList(result.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -349,6 +360,7 @@ const Home = () => {
           handleControlBottomModal={handleControlBottomModal}
           handleClickMenuboxInTodoComponent={handleClickMenuboxInTodoComponent}
           objectList={objectList}
+          isRequestLoading={isRequestLoading}
           handleChangeAddingTodoMode={handleChangeAddingTodoMode}
           handleAddTodo={handleAddTodo}
           handleUpdateTodo={handleUpdateTodo}
