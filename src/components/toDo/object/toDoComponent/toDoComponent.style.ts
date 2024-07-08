@@ -5,6 +5,9 @@ const ComponentContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 80%;
+  @media (max-width: 950px) {
+    width: 100%;
+  }
 `;
 
 const LeftAreaContainer = styled.div`

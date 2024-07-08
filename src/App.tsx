@@ -7,6 +7,7 @@ import theme from "./styles/layout/themes";
 import { useEffect, useState } from "react";
 import GlobalStyle from "./styles/globalStyles";
 import ThemeToggle from "./components/themeToggle/themeToggle";
+import CalendarStyle from "./styles/calendarStyles";
 
 const App = () => {
   /** 로컬스토리지에서 저장된 테마 값을 불러오거나, 없다면 시스템 설정에 따라 초기 테마 값 설정 */
@@ -46,6 +47,7 @@ const App = () => {
     <BrowserRouter>
       <ThemeProvider theme={theme[themeMode]}>
         <GlobalStyle />
+        <CalendarStyle />
         <Layout>
           <ThemeToggle themeMode={themeMode} handleFunc={handleToggleTheme} />
           <Routes>

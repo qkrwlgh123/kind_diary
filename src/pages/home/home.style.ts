@@ -3,6 +3,10 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
   width: 70%;
+  @media (max-width: 950px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 const BottonModalTitle = styled.div`
