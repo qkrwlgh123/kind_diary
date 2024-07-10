@@ -1,4 +1,5 @@
 import { ObjectInferface, TodoInterface } from "../../types/object";
+import ObjectSkeleton from "../common/loadingIndicator/skeletonUIComponent/object/objectSkeleton";
 import AddNewObject from "./newObject/addNewObject";
 import Object from "./object/object";
 import Placeholder from "./placeholder/placeholder";
@@ -35,9 +36,7 @@ const Todo = ({
 
       <Style.ObjectListContainer>
         {isRequestLoading ? (
-          <div>
-            <span>목표 리스트를 불러오는 중입니다</span>
-          </div>
+          <ObjectSkeleton />
         ) : objectList && objectList.length > 0 ? (
           objectList.map((object: ObjectInferface, index: number) => (
             <Object

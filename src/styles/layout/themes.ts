@@ -12,6 +12,8 @@ const theme: DefaultTheme = {
     calendarTodayBackground: "#ffff76",
     calendarHoverBackground: "",
     calendarActiveBackground: "",
+
+    skeletonBackground: "#3f3f3f",
   },
 
   dark: {
@@ -25,6 +27,8 @@ const theme: DefaultTheme = {
     calendarTodayBackground: "#212529",
     calendarHoverBackground: "#2A303E",
     calendarActiveBackground: "#2A303E",
+
+    skeletonBackground: "#3f3f3f",
   },
 
   objectFontColor: {
