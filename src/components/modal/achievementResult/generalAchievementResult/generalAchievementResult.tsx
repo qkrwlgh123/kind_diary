@@ -6,14 +6,18 @@ import {
   ResultContainer,
   TitleContainer,
 } from "../commonStyle";
+import NextButtonComponent from "./nextButtonComponent/nextButtonComponent";
 
 const GeneralAchievementResult = ({
   generalAchievementResult,
   handleFlipPage,
 }: {
   generalAchievementResult: null | number;
-  handleFlipPage?: () => void;
+  handleFlipPage: () => void;
 }) => {
+  /** 페이지가 렌더링 된 후, 지난 시간(렌더링된 후, 3초가 지나야 페이지 넘어가는 것이 가능) */
+  const [isTimePassed, setIsTimePassed] = useState(false);
+
   /** 하단 피드백 메세지 */
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
@@ -40,8 +44,15 @@ const GeneralAchievementResult = ({
     }, 1000);
   }, [generalAchievementResult]);
 
+  /** 페이지 넘기기는 3초 후에 가능하도록 하는 Effect */
+  useEffect(() => {
+    setTimeout(() => {
+      setIsTimePassed(true);
+    }, 4000);
+  }, []);
+
   return (
-    <ResultContainer onClick={handleFlipPage}>
+    <ResultContainer>
       <TitleContainer>
         <h2>이번 주 전체 달성률</h2>
       </TitleContainer>
@@ -51,8 +62,12 @@ const GeneralAchievementResult = ({
       <MessageContainer
         $animationText={generalAchievementResult ? true : false}
       >
-        {feedbackMessage}
+        <span>{feedbackMessage}</span>
       </MessageContainer>
+      <NextButtonComponent
+        isTimePassed={isTimePassed}
+        handleFlipPage={isTimePassed ? handleFlipPage : undefined}
+      />
     </ResultContainer>
   );
 };

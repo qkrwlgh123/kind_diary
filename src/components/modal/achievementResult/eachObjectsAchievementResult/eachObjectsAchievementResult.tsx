@@ -11,10 +11,8 @@ import { EachObjectAchievementResultInterface } from "../../../../types/achievem
 
 const EachObjectsAchievementResult = ({
   eachObjectsAchievementResult,
-  handleFlipPage,
 }: {
   eachObjectsAchievementResult: EachObjectAchievementResultInterface[];
-  handleFlipPage: () => void;
 }) => {
   const [lessThanEightyListStr, setLessThanEightyListStr] = useState("");
 
@@ -38,7 +36,7 @@ const EachObjectsAchievementResult = ({
   }, [eachObjectsAchievementResult]);
 
   return (
-    <ResultContainer onClick={handleFlipPage}>
+    <ResultContainer>
       <TitleContainer>
         <h2>이번 주 목표별 달성률</h2>
       </TitleContainer>
