@@ -21,13 +21,13 @@ const ModalBackground = styled.div`
   bottom: 0;
 `;
 
-const ModalWindow = styled.div`
+const ModalWindow = styled.div<{ $top?: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
 
   position: relative;
-  margin-bottom: 350px;
+  margin-bottom: ${(props) => (props.$top ? 350 - props.$top + "px" : "350px")};
   border-radius: 10px;
   background: ${(props) => props.theme.modalBgColor};
   padding: 40px 30px 30px 30px;

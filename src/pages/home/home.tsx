@@ -17,6 +17,7 @@ import { handleRequestUncompleteTodo } from "../../api/todo/unComplete";
 import { handleRequestDeleteTodo } from "../../api/todo/delete";
 import { handleRequestUpdateTodo } from "../../api/todo/update";
 import AddObjectModal from "../../components/modal/addObjectModal/addObjectModal";
+import AchievementResult from "../../components/modal/achievementResult/achievementResult";
 
 const Home = () => {
   /** API 요청 응답 전 로딩 상태 */
@@ -76,6 +77,15 @@ const Home = () => {
   /** 할일, 목표 수정 Modal on, off control 함수 */
   const handleControlBottomModal = () => {
     setIsBottomModalOpen((prev) => !prev);
+  };
+
+  /** 토요일 팝업, 이번 주 성취 결과 Mdoal on, off 상태 */
+  const [isAchievementResultModalOpen, setIsAchievementResultModalOpen] =
+    useState(false);
+
+  /** 이번 주 성취 결과 Mdoal on, off control 함수 */
+  const handleControlAchievementResultModal = () => {
+    setIsAchievementResultModalOpen((prev) => !prev);
   };
 
   /** 선택 월에 해당하는 모든 목표 리스트 */
@@ -333,6 +343,20 @@ const Home = () => {
     setObjectList(filteredData);
   }, [wholeObjectList, currentDate]);
 
+  /** 매주 토요일, 성취 결과 팝업 on Effect */
+  useEffect(() => {
+    const todayDateObject = new Date();
+    if (todayDateObject.getDay() === 6) {
+      const popupFlagInLocalstorage = localStorage.getItem("popup_flag");
+      if (!popupFlagInLocalstorage) {
+        handleControlAchievementResultModal();
+        localStorage.setItem("popup_flag", "alreadyRendered");
+      }
+      return;
+    }
+    localStorage.removeItem("popup_flag");
+  }, []);
+
   return (
     <>
       {/* 새 목표 생성 모달 */}
@@ -343,6 +367,13 @@ const Home = () => {
         typedObject={typedObject}
         handleTypingObject={handleTypingObject}
         handleAddObject={handleAddObject}
+      />
+      {/* 토요일 팝업, 이번 주 성취 결과 */}
+      <AchievementResult
+        isAchievementResultModalOpen={isAchievementResultModalOpen}
+        handleControlAchievementResultModal={
+          handleControlAchievementResultModal
+        }
       />
 
       <Style.Container>
