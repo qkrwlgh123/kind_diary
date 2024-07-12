@@ -15,6 +15,9 @@ const AchievementResult = ({
   isAchievementResultModalOpen: boolean;
   handleControlAchievementResultModal: () => void;
 }) => {
+  /** 페이지가 렌더링 된 후, 지난 시간(렌더링된 후, 3초가 지나야 페이지 넘어가는 것이 가능) */
+  const [isTimePassed, setIsTimePassed] = useState(false);
+
   /** 현재 페이지 번호 */
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -34,10 +37,10 @@ const AchievementResult = ({
     }
   };
 
-  const todayDate = convertDateToString(new Date());
-
   /** 전체 달성률, 목표별 달성률 쿼리 요청 */
   useEffect(() => {
+    const todayDate = convertDateToString(new Date());
+
     const fetchData = async () => {
       if (currentPage === 1) {
         const fetchGeneralAchievementResult =
@@ -55,17 +58,25 @@ const AchievementResult = ({
     fetchData();
   }, [currentPage]);
 
+  /** 페이지 넘기기는 3초 후에 가능하도록 하는 Effect */
+  useEffect(() => {
+    setTimeout(() => {
+      setIsTimePassed(true);
+    }, 3000);
+  }, []);
   return (
     <CenterModal
       display={isAchievementResultModalOpen ? "flex" : "none"}
       top={250}
       controlFunc={handleControlAchievementResultModal}
+      isForbidExternalClick={true}
+      isHideCloseButton={currentPage === 1 ? true : false}
     >
       <Style.ResultContainer>
         {currentPage === 1 ? (
           <GeneralAchievementResult
             generalAchievementResult={generalAchievementResult}
-            handleFlipPage={handleFlipPage}
+            handleFlipPage={isTimePassed ? handleFlipPage : undefined}
           />
         ) : (
           <EachObjectsAchievementResult

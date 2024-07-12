@@ -368,6 +368,7 @@ const Home = () => {
         handleTypingObject={handleTypingObject}
         handleAddObject={handleAddObject}
       />
+
       {/* 토요일 팝업, 이번 주 성취 결과 */}
       <AchievementResult
         isAchievementResultModalOpen={isAchievementResultModalOpen}

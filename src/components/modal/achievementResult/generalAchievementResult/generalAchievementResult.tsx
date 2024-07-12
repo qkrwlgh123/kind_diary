@@ -12,10 +12,12 @@ const GeneralAchievementResult = ({
   handleFlipPage,
 }: {
   generalAchievementResult: null | number;
-  handleFlipPage: () => void;
+  handleFlipPage?: () => void;
 }) => {
+  /** 하단 피드백 메세지 */
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
+  /** 달성률에 따른 피드백 메세지로 갱신 Effect(트랜지션 적용을 위해 지연시간 적용) */
   useEffect(() => {
     setTimeout(() => {
       if (generalAchievementResult) {
