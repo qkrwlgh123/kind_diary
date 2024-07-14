@@ -10,7 +10,7 @@ const UtilsBox = ({
   handleFunc: () => void;
 }) => {
   /** 로그아웃으로 상태 갱신하는 함수 */
-  const { logOut } = useStore();
+  const { isLoggedIn, logOut } = useStore();
 
   /** 로그아웃 함수 */
   const handleLogout = () => {
@@ -21,7 +21,9 @@ const UtilsBox = ({
       <Style.IconBox onClick={handleFunc}>
         {themeMode === "light" ? <FaMoon /> : <FaSun />}
       </Style.IconBox>
-      <Style.LogoutButton onClick={handleLogout}>로그아웃</Style.LogoutButton>
+      {isLoggedIn && (
+        <Style.LogoutButton onClick={handleLogout}>로그아웃</Style.LogoutButton>
+      )}
     </Style.UtilsBox>
   );
 };
