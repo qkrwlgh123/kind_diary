@@ -1,10 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/home/home";
 import Login from "./pages/login/login";
 import Layout from "./styles/layout/layout";
@@ -12,11 +6,10 @@ import { ThemeProvider } from "styled-components";
 import theme from "./styles/layout/themes";
 import { useEffect, useState } from "react";
 import GlobalStyle from "./styles/globalStyles";
-import ThemeToggle from "./components/themeToggle/themeToggle";
 import CalendarStyle from "./styles/calendarStyles";
-import useAuth from "./hooks/useAuth";
 import ProtectedRoute from "./components/auth/protectedRoute";
 import useStore from "./store/authStore";
+import UtilsBox from "./components/utilsBox/utilsBox";
 
 const App = () => {
   const { isLoggedIn } = useStore();
@@ -75,7 +68,8 @@ const App = () => {
         <GlobalStyle />
         <CalendarStyle />
         <Layout>
-          <ThemeToggle themeMode={themeMode} handleFunc={handleToggleTheme} />
+          <UtilsBox themeMode={themeMode} handleFunc={handleToggleTheme} />
+
           <Routes>
             {routeList.map((route) => {
               const isAuthenticated = isLoggedIn;

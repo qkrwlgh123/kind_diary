@@ -1,4 +1,3 @@
-import theme from "../../../styles/layout/themes";
 import { getFontColor } from "../../../utils/colorUtils";
 import Style from "./button.style";
 

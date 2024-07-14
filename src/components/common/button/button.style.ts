@@ -14,9 +14,9 @@ const ButtonBox = styled.div<{ $fontColor?: string; $bgColor?: string }>`
     font-size: 15px;
     border: none;
     cursor: pointer;
-    font-weight: ${(props) => (props.$fontColor ? 700 : 700)};
+    font-weight: 700;
     color: ${(props) =>
-      props.$fontColor ? props.$fontColor : theme.commonColor.white};
+      props.$fontColor ? props.$fontColor : props.theme.fontColor};
   }
 `;
 

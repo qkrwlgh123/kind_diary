@@ -37,9 +37,7 @@ const Login = () => {
     const loginResult = await handleRequestLogin(userInfo);
 
     if (loginResult?.code === 200) {
-      localStorage.setItem("token", loginResult.data);
-
-      loginSuccess();
+      loginSuccess(loginResult.data);
       navigate("/", { replace: true });
     } else {
       alert("로그인 정보를 다시 확인해주세요.");

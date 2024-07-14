@@ -9,11 +9,11 @@ const ProtectedRoute = ({ component }: ProtectedRouteProps) => {
   const { isLoggedIn } = useStore();
 
   if (!isLoggedIn) {
-    // 유저 정보가 없다면 홈으로! 혹은 로그인페이지로 가게 할 수 있음
+    /** 비 로그인 상태일 시, 로그인 페이지 이동 */
     return <Navigate to="/login" replace={true} />;
   }
 
-  // 유저 정보가 있다면 자식 컴포넌트를 보여줌
+  /** 컴포넌트 렌더링 */
   return component;
 };
 

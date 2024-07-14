@@ -3,9 +3,6 @@ import axios from "axios";
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
   timeout: 10000,
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
 });
 
 // 요청 인터셉터

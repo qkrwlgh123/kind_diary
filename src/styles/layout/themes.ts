@@ -18,7 +18,7 @@ const theme: DefaultTheme = {
 
   dark: {
     backgroundColor: "#121212",
-    fontColor: "white",
+    fontColor: "#ffffff",
     buttonBgColor: "#212529",
     modalBgColor: "#282828",
 
