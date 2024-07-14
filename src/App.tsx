@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import Home from "./pages/home/home";
 import Login from "./pages/login/login";
 import Layout from "./styles/layout/layout";
@@ -8,8 +14,12 @@ import { useEffect, useState } from "react";
 import GlobalStyle from "./styles/globalStyles";
 import ThemeToggle from "./components/themeToggle/themeToggle";
 import CalendarStyle from "./styles/calendarStyles";
+import { handleRequestValidateToken } from "./api/user/tokenValidate";
+import useAuth from "./hooks/useAuth";
 
 const App = () => {
+  const { isLoggedIn } = useAuth();
+
   /** 로컬스토리지에서 저장된 테마 값을 불러오거나, 없다면 시스템 설정에 따라 초기 테마 값 설정 */
   const getInitialTheme = () => {
     const savedTheme = localStorage.getItem("themeMode");
@@ -36,6 +46,7 @@ const App = () => {
     });
   };
 
+  /** 로컬스토리지에서 다크모드 데이터 찾아서 갱신 */
   useEffect(() => {
     const savedTheme = localStorage.getItem("themeMode");
     if (savedTheme) {
@@ -51,9 +62,17 @@ const App = () => {
         <Layout>
           <ThemeToggle themeMode={themeMode} handleFunc={handleToggleTheme} />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/*" element={<Navigate to="/" replace />} />
+            {isLoggedIn ? (
+              <>
+                <Route path="/" element={<Home />} />
+                <Route path="/*" element={<Navigate to="/" replace />} />
+              </>
+            ) : (
+              <>
+                <Route path="/login" element={<Login />} />
+                <Route path="/*" element={<Navigate to="/login" replace />} />
+              </>
+            )}
           </Routes>
         </Layout>
       </ThemeProvider>
