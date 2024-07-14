@@ -1,11 +1,9 @@
+import { UserLoginInfo } from "../../types/user";
 import axiosInstance from "../axios/axiosInstance";
 import axios, { AxiosError } from "axios";
 
 /** 로그인 요청 함수 */
-export const handleRequestLogin = async (userInfo: {
-  name: string;
-  password: string;
-}) => {
+export const handleRequestLogin = async (userInfo: UserLoginInfo) => {
   try {
     const response = await axiosInstance.post("/api/user/login", {
       data: { name: userInfo.name, password: userInfo.password },
@@ -24,6 +22,5 @@ export const handleRequestLogin = async (userInfo: {
     } else {
       console.error("Unexpected error:", err);
     }
-    throw err;
   }
 };

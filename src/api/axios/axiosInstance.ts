@@ -4,7 +4,6 @@ const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
   timeout: 10000,
   headers: {
-    "Content-Type": "application/json",
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 });
@@ -13,6 +12,10 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // 요청 전에 수행할 작업
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {

@@ -14,11 +14,26 @@ import { useEffect, useState } from "react";
 import GlobalStyle from "./styles/globalStyles";
 import ThemeToggle from "./components/themeToggle/themeToggle";
 import CalendarStyle from "./styles/calendarStyles";
-import { handleRequestValidateToken } from "./api/user/tokenValidate";
 import useAuth from "./hooks/useAuth";
+import ProtectedRoute from "./components/auth/protectedRoute";
+import useStore from "./store/authStore";
 
 const App = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useStore();
+
+  /** 라우트 목록 */
+  const routeList = [
+    {
+      path: "/",
+      element: <Home />,
+      isPrivate: true,
+    },
+    {
+      path: "/login",
+      element: <Login />,
+      isPrivate: false,
+    },
+  ];
 
   /** 로컬스토리지에서 저장된 테마 값을 불러오거나, 없다면 시스템 설정에 따라 초기 테마 값 설정 */
   const getInitialTheme = () => {
@@ -62,17 +77,36 @@ const App = () => {
         <Layout>
           <ThemeToggle themeMode={themeMode} handleFunc={handleToggleTheme} />
           <Routes>
-            {isLoggedIn ? (
-              <>
-                <Route path="/" element={<Home />} />
-                <Route path="/*" element={<Navigate to="/" replace />} />
-              </>
-            ) : (
-              <>
-                <Route path="/login" element={<Login />} />
-                <Route path="/*" element={<Navigate to="/login" replace />} />
-              </>
-            )}
+            {routeList.map((route) => {
+              const isAuthenticated = isLoggedIn;
+              if (route.isPrivate) {
+                return (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={<ProtectedRoute component={route.element} />}
+                  />
+                );
+              } else {
+                if (route.path === "/login" && isAuthenticated) {
+                  return (
+                    <Route
+                      key={route.path}
+                      path={route.path}
+                      element={<Navigate to="/" replace />}
+                    />
+                  );
+                }
+                return (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={route.element}
+                  />
+                );
+              }
+            })}
+            <Route path="/*" element={<Navigate to="/" replace />} />
           </Routes>
         </Layout>
       </ThemeProvider>
