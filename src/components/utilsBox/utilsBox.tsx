@@ -1,6 +1,6 @@
 import useStore from "../../store/authStore";
+import ThemeToggleBtn from "./themeToggleBtn/themeToggleBtn";
 import Style from "./utilsBox.style";
-import { FaMoon, FaSun } from "react-icons/fa";
 
 const UtilsBox = ({
   themeMode,
@@ -18,8 +18,8 @@ const UtilsBox = ({
   };
   return (
     <Style.UtilsBox>
-      <Style.IconBox onClick={handleFunc}>
-        {themeMode === "light" ? <FaMoon /> : <FaSun />}
+      <Style.IconBox>
+        <ThemeToggleBtn themeMode={themeMode} handleFunc={handleFunc} />
       </Style.IconBox>
       {isLoggedIn && (
         <Style.LogoutButton onClick={handleLogout}>로그아웃</Style.LogoutButton>
