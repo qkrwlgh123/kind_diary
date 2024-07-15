@@ -1,3 +1,4 @@
+import { useState } from "react";
 import theme from "../../../styles/layout/themes";
 import Button from "../../common/button/button";
 import CenterModal from "../../common/modal/center/centerModal";
@@ -18,6 +19,9 @@ const AddObjectModal = ({
   handleTypingObject: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleAddObject: () => void;
 }) => {
+  const [isLightmode, setIsLightMode] = useState(
+    localStorage.getItem("themeMode")
+  );
   return (
     <CenterModal
       display={isCenterModalOpen ? "flex" : "none"}
@@ -43,7 +47,11 @@ const AddObjectModal = ({
         />
       </Style.InputContainer>
 
-      <Button onClickFunc={handleAddObject} bgColor={theme.commonColor.blue}>
+      <Button
+        onClickFunc={handleAddObject}
+        bgColor={theme.commonColor.blue}
+        specificColor={isLightmode && theme.commonColor.white}
+      >
         생성
       </Button>
     </CenterModal>

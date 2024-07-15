@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import theme from "../../styles/layout/themes";
 
-const LoginContainer = styled.div`
+const LoginContainer = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;

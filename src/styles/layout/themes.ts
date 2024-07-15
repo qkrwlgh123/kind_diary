@@ -2,18 +2,18 @@ import { DefaultTheme } from "styled-components";
 
 const theme: DefaultTheme = {
   light: {
-    backgroundColor: "#95D2B3",
+    backgroundColor: "#D4F0F0",
     fontColor: "#222222",
     buttonBgColor: "#dbead5",
-    modalBgColor: "white",
+    modalBgColor: "#ffffff",
 
     calendarBackground: "#ffffff",
-    calendarColor: "#000000",
+    calendarColor: "#222222",
     calendarTodayBackground: "#ffff76",
     calendarHoverBackground: "",
     calendarActiveBackground: "",
 
-    skeletonBackground: "#3f3f3f",
+    skeletonBackground: "#E2E2E2",
   },
 
   dark: {

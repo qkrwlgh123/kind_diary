@@ -6,11 +6,13 @@ const Button = ({
   onClickFunc,
   index,
   bgColor,
+  specificColor,
 }: {
   children: React.ReactNode;
   onClickFunc: () => void;
   index?: number;
   bgColor?: string;
+  specificColor?: string;
 }) => {
   let fontColor;
   if (typeof index === "number") fontColor = getFontColor(index);
@@ -20,6 +22,7 @@ const Button = ({
       onClick={onClickFunc}
       $fontColor={fontColor}
       $bgColor={bgColor}
+      $specificColor={specificColor}
     >
       <button>{children}</button>
     </Style.ButtonBox>

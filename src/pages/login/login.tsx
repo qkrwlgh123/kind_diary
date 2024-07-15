@@ -28,7 +28,8 @@ const Login = () => {
   };
 
   /** 로그인 요청 함수 */
-  const handleLogin = async () => {
+  const handleLogin = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
     if (!userInfo.name || !userInfo.password) {
       alert("로그인 정보를 입력해주세요.");
       return;
@@ -48,13 +49,18 @@ const Login = () => {
     <Style.LoginContainer>
       <h1>로그인</h1>
       <div>
-        <Style.Input value={userInfo.name} onChange={handleTypeUserName} />
+        <Style.Input
+          value={userInfo.name}
+          autoComplete="username"
+          onChange={handleTypeUserName}
+        />
       </div>
       <div>
         <Style.Input
           value={userInfo.password}
           type="password"
           onChange={handleTypePassword}
+          autoComplete="current-password"
         />
       </div>
       <div>

@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
   timeout: 10000,
 });
 
-// 요청 인터셉터
+/** 요청 전 인터셉터 */
 axiosInstance.interceptors.request.use(
   (config) => {
     // 요청 전에 수행할 작업
@@ -21,7 +21,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// 응답 인터셉터
+/** 응답 전 인터셉터 */
 axiosInstance.interceptors.response.use(
   (response) => {
     // 응답 데이터 처리
