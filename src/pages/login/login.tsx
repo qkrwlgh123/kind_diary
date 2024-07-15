@@ -50,6 +50,7 @@ const Login = () => {
       <h1>로그인</h1>
       <div>
         <Style.Input
+          placeholder="계정"
           value={userInfo.name}
           autoComplete="username"
           onChange={handleTypeUserName}
@@ -57,6 +58,7 @@ const Login = () => {
       </div>
       <div>
         <Style.Input
+          placeholder="비밀번호"
           value={userInfo.password}
           type="password"
           onChange={handleTypePassword}
