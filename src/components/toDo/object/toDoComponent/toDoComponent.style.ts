@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ComponentContainer = styled.div`
+const ComponentContainer = styled.div<{ isLightTheme: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,6 +8,10 @@ const ComponentContainer = styled.div`
   @media (max-width: 950px) {
     width: 100%;
   }
+  background-color: ${(props) => props.theme.todoComponentBgColor};
+
+  padding: ${(props) => (props.isLightTheme ? "10px 10px" : "")};
+  border-radius: 7px;
 `;
 
 const LeftAreaContainer = styled.div`

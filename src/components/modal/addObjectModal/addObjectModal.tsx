@@ -3,6 +3,7 @@ import theme from "../../../styles/layout/themes";
 import Button from "../../common/button/button";
 import CenterModal from "../../common/modal/center/centerModal";
 import Style from "./addObjectModal.style";
+import useThemeStore from "../../../store/themeStore";
 
 const AddObjectModal = ({
   inputRef,
@@ -19,9 +20,8 @@ const AddObjectModal = ({
   handleTypingObject: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleAddObject: () => void;
 }) => {
-  const [isLightmode, setIsLightMode] = useState(
-    localStorage.getItem("themeMode")
-  );
+  /** theme 전역 상태 */
+  const { themeMode } = useThemeStore();
   return (
     <CenterModal
       display={isCenterModalOpen ? "flex" : "none"}
@@ -50,7 +50,7 @@ const AddObjectModal = ({
       <Button
         onClickFunc={handleAddObject}
         bgColor={theme.commonColor.blue}
-        specificColor={isLightmode && theme.commonColor.white}
+        specificColor={themeMode === "light" && theme.commonColor.white}
       >
         생성
       </Button>

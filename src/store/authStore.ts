@@ -6,7 +6,7 @@ interface AuthState {
   logOut: () => void;
 }
 
-const useStore = create<AuthState>((set) => ({
+const useAuthStore = create<AuthState>((set) => ({
   isLoggedIn: localStorage.getItem("token") ? true : false,
   loginSuccess: (token: string) => {
     localStorage.setItem("token", token);
@@ -18,4 +18,4 @@ const useStore = create<AuthState>((set) => ({
   },
 }));
 
-export default useStore;
+export default useAuthStore;

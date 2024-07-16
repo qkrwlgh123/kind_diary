@@ -4,6 +4,7 @@ const theme: DefaultTheme = {
   light: {
     backgroundColor: "#D4F0F0",
     fontColor: "#222222",
+
     buttonBgColor: "#dbead5",
     modalBgColor: "#ffffff",
 
@@ -12,6 +13,8 @@ const theme: DefaultTheme = {
     calendarTodayBackground: "#ffff76",
     calendarHoverBackground: "",
     calendarActiveBackground: "",
+
+    todoComponentBgColor: "azure",
 
     skeletonBackground: "#E2E2E2",
   },
@@ -27,6 +30,8 @@ const theme: DefaultTheme = {
     calendarTodayBackground: "#212529",
     calendarHoverBackground: "#2A303E",
     calendarActiveBackground: "#2A303E",
+
+    todoComponentBgColor: "",
 
     skeletonBackground: "#3f3f3f",
   },

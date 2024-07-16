@@ -2,6 +2,8 @@ import Style from "./toDoComponent.style";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { FaRegSmile } from "react-icons/fa";
 import { TodoInterface } from "../../../../types/object";
+import { useEffect, useState } from "react";
+import useThemeStore from "../../../../store/themeStore";
 
 const TodoComponent = ({
   id,
@@ -29,12 +31,16 @@ const TodoComponent = ({
     handleControlBottomModal();
     handleClickMenuboxInTodoComponent({ id, name, isCompleted });
   };
+  /** theme 전역 상태 */
+  const { themeMode } = useThemeStore();
+
   return (
-    <Style.ComponentContainer>
+    <Style.ComponentContainer isLightTheme={themeMode === "light"}>
       <Style.LeftAreaContainer>
         <Style.CheckBox
           $objectColor={objectColor}
           onClick={() => {
+            if (isCompleted) return;
             if (id) handleCompleteTodo(id);
           }}
         >

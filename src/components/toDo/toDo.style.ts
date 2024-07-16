@@ -8,12 +8,16 @@ const TodoContainer = styled.div`
     margin: 0;
     padding: 0 15px;
   }
+
+  height: 83vh;
 `;
 
 const ObjectListContainer = styled.div`
   gap: 10px;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow-y: scroll;
 `;
 
 export default { TodoContainer, ObjectListContainer };

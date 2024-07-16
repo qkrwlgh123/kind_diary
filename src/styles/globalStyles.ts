@@ -10,7 +10,10 @@ const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.fontColor};
     margin: 0;
     padding: 0;
+
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 500;
+
     -webkit-user-select:none;
     -moz-user-select:none;
     -ms-user-select:none;
