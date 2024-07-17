@@ -1,5 +1,5 @@
 import { ObjectQueryResult } from "../../../types/queryResult/objectList";
-import { getFontColor } from "../../../utils/colorUtils";
+import { getObjectBgColor } from "../../../utils/colorUtils";
 import Content from "./content/content";
 import Style from "./tileContent.style";
 
@@ -10,7 +10,7 @@ const TileContent = ({ list }: { list: ObjectQueryResult[] }) => {
         <Content
           key={object.id}
           object={object.object}
-          color={getFontColor(index)}
+          color={getObjectBgColor(index)}
         />
       ))}
     </Style.TileContentsContainer>

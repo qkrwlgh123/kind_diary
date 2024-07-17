@@ -83,7 +83,7 @@ const Home = () => {
   const [isAchievementResultModalOpen, setIsAchievementResultModalOpen] =
     useState(false);
 
-  /** 이번 주 성취 결과 Mdoal on, off control 함수 */
+  /** 이번 주 성취 결과 Modal on, off control 함수 */
   const handleControlAchievementResultModal = () => {
     setIsAchievementResultModalOpen((prev) => !prev);
   };

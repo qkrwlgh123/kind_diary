@@ -21,9 +21,9 @@ const GeneralAchievementResult = ({
   /** 하단 피드백 메세지 */
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
-  /** 달성률에 따른 피드백 메세지로 갱신 Effect(트랜지션 적용을 위해 지연시간 적용) */
+  /** 달성률에 따른 피드백 메세지 갱신 Effect(트랜지션 적용을 위해 지연시간 적용) */
   useEffect(() => {
-    setTimeout(() => {
+    const setFeedbackMessageTimer = window.setTimeout(() => {
       if (generalAchievementResult) {
         if (generalAchievementResult < 80) {
           setFeedbackMessage(generalResultMessage.lessThanEighty);
@@ -42,13 +42,17 @@ const GeneralAchievementResult = ({
         }
       }
     }, 1000);
+
+    return () => clearTimeout(setFeedbackMessageTimer);
   }, [generalAchievementResult]);
 
   /** 페이지 넘기기는 3초 후에 가능하도록 하는 Effect */
   useEffect(() => {
-    setTimeout(() => {
+    const setTimePassedTimer = window.setTimeout(() => {
       setIsTimePassed(true);
     }, 4000);
+
+    return () => clearTimeout(setTimePassedTimer);
   }, []);
 
   return (

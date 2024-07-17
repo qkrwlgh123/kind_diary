@@ -1,5 +1,6 @@
 import { create } from "zustand";
 
+/** 로그인 전역 상태 및 상태 갱신 함수 */
 interface AuthState {
   isLoggedIn: boolean;
   loginSuccess: (token: string) => void;

@@ -1,4 +1,4 @@
-import { getFontColor } from "../../../utils/colorUtils";
+import { getObjectBgColor } from "../../../utils/colorUtils";
 import Style from "./button.style";
 
 const Button = ({
@@ -15,7 +15,7 @@ const Button = ({
   specificColor?: string;
 }) => {
   let fontColor;
-  if (typeof index === "number") fontColor = getFontColor(index);
+  if (typeof index === "number") fontColor = getObjectBgColor(index);
 
   return (
     <Style.ButtonBox

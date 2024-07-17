@@ -12,10 +12,10 @@ const Switch = styled.div`
   transition: background-color 0.3s;
 `;
 
-const Slider = styled.div<{ themeMode: string | number }>`
+const Slider = styled.div<{ $themeMode: string | number }>`
   position: absolute;
   top: 2px;
-  left: ${(props) => (props.themeMode === "light" ? "32px" : "2px")};
+  left: ${(props) => (props.$themeMode === "light" ? "32px" : "2px")};
   width: 26px;
   height: 26px;
   background-color: white;

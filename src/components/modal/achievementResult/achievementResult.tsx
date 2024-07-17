@@ -36,11 +36,13 @@ const AchievementResult = ({
   useEffect(() => {
     const todayDate = convertDateToString(new Date());
 
+    let setStateTimer: number;
+
     const fetchData = async () => {
       if (currentPage === 1) {
         const fetchGeneralAchievementResult =
           await handleRequestGeneralAchievementResult(todayDate);
-        setTimeout(() => {
+        setStateTimer = window.setTimeout(() => {
           setGeneralAchievementResult(fetchGeneralAchievementResult.data);
         }, 300);
       } else if (currentPage === 2) {
@@ -51,6 +53,8 @@ const AchievementResult = ({
       }
     };
     fetchData();
+
+    return () => clearTimeout(setStateTimer);
   }, [currentPage]);
 
   return (

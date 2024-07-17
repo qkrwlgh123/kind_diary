@@ -19,13 +19,13 @@ const EachObjectsAchievementResult = ({
   const [delayedProgressRate, setDelayedProgressRate] = useState<number[]>([]);
 
   useEffect(() => {
-    setTimeout(() => {
+    const delayProgressRateTimer = window.setTimeout(() => {
       setDelayedProgressRate(
         eachObjectsAchievementResult.map((object) => object.completedRate)
       );
     }, 300);
 
-    setTimeout(() => {
+    const setFeedbackMessageTimer = window.setTimeout(() => {
       setLessThanEightyListStr(
         eachObjectsAchievementResult
           .filter((achieveResult) => achieveResult.completedRate < 80)
@@ -33,6 +33,11 @@ const EachObjectsAchievementResult = ({
           .join(", ")
       );
     }, 1000);
+
+    return () => {
+      clearTimeout(delayProgressRateTimer);
+      clearTimeout(setFeedbackMessageTimer);
+    };
   }, [eachObjectsAchievementResult]);
 
   return (
@@ -48,6 +53,7 @@ const EachObjectsAchievementResult = ({
             progressRate={
               delayedProgressRate[index] ? delayedProgressRate[index] : 0
             }
+            index={index}
           />
         ))}
       </Style.ResultListContainer>

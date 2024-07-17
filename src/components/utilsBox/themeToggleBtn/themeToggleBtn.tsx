@@ -10,7 +10,7 @@ const ThemeToggleBtn = ({
 }) => {
   return (
     <Style.Switch onClick={handleFunc}>
-      <Style.Slider themeMode={themeMode}></Style.Slider>
+      <Style.Slider $themeMode={themeMode}></Style.Slider>
       <Style.IconsContainer>
         <Style.MoonBox>
           <FaMoon />

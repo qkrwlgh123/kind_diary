@@ -35,7 +35,7 @@ const TodoComponent = ({
   const { themeMode } = useThemeStore();
 
   return (
-    <Style.ComponentContainer isLightTheme={themeMode === "light"}>
+    <Style.ComponentContainer $isLightTheme={themeMode === "light"}>
       <Style.LeftAreaContainer>
         <Style.CheckBox
           $objectColor={objectColor}

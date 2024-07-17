@@ -36,18 +36,34 @@ const theme: DefaultTheme = {
     skeletonBackground: "#3f3f3f",
   },
 
-  objectFontColor: {
+  objectBgColor: {
     first: "#7367F0",
     second: "#32CCBC",
     third: "#EA5455",
     fourth: "green",
     fifth: "purple",
     sixth: "#744524",
+    seventh: "#C89898",
+  },
+
+  achievementBgColor: {
+    first: "#7367F0",
+    second: "#32CCBC",
+    third: "#EA5455",
+    fourth: "green",
+    fifth: "purple",
+    sixth: "#744524",
+    seventh: "#C89898",
+    eighth: "#881616",
+    nineth: "#A55959",
+    tenth: "#C0DDD0",
+    eleventh: "#F6B488",
   },
 
   commonColor: {
     white: "#ffffff",
     blue: "#3B81F6",
+    rateBgColor: "#3473a0",
   },
 };
 

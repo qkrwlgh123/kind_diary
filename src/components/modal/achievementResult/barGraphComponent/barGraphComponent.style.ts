@@ -21,10 +21,10 @@ const ProgressContainer = styled.div`
   background-color: ${theme.commonColor.white};
 `;
 
-const ProgressBar = styled.div<{ $progressRate: number }>`
+const ProgressBar = styled.div<{ $progressRate: number; $bgColor: string }>`
   width: ${(props) => props.$progressRate}%;
   height: 100%;
-  background-color: #3473a0;
+  background-color: ${(props) => props.$bgColor};
   transition: width 1s ease;
 `;
 

@@ -3,7 +3,7 @@ import { TodoInterface } from "../../../types/object";
 import Button from "../../common/button/button";
 import Style from "./object.style";
 import TodoComponent from "./toDoComponent/toDoComponent";
-import { getFontColor } from "../../../utils/colorUtils";
+import { getObjectBgColor } from "../../../utils/colorUtils";
 
 const Object = ({
   id,
@@ -131,7 +131,7 @@ const Object = ({
                 />
                 <Style.InputTodoBorder
                   $isVisible={toDo.isUpdatingTodo}
-                  $fontColor={getFontColor(index)}
+                  $fontColor={getObjectBgColor(index)}
                 />
               </Style.InputTodoBox>
             ) : (
@@ -145,7 +145,7 @@ const Object = ({
                 }
                 isCompleted={toDo.isCompleted}
                 handleCompleteTodo={handleCompleteTodo}
-                objectColor={getFontColor(index)}
+                objectColor={getObjectBgColor(index)}
               />
             )
           )}
@@ -161,7 +161,7 @@ const Object = ({
           />
           <Style.InputTodoBorder
             $isVisible={isAddingTodo}
-            $fontColor={getFontColor(index)}
+            $fontColor={getObjectBgColor(index)}
           />
         </Style.InputTodoBox>
       </div>
