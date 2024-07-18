@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-const UtilsBox = styled.div`
+const UtilsBox = styled.div<{ $isVisible: boolean }>`
   display: flex;
   align-items: center;
   position: fixed;
-  top: 10%;
+  top: 6%;
   left: 15%;
   font-size: 20px;
 
@@ -12,6 +12,12 @@ const UtilsBox = styled.div`
     position: absolute;
     left: 5%;
   }
+
+  @media (min-width: 951px) {
+    opacity: ${(props) => (props.$isVisible ? 1 : 0)};
+    visibility: ${(props) => (props.$isVisible ? "visible" : "hidden")};
+  }
+  transition: all 0.2s ease;
 `;
 
 const IconBox = styled.div`
