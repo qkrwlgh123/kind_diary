@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import useStore from "../../store/authStore";
 import ThemeToggleBtn from "./themeToggleBtn/themeToggleBtn";
 import Style from "./utilsBox.style";
+import { useQueryClient } from "@tanstack/react-query";
 
 const UtilsBox = ({
   themeMode,
@@ -10,11 +11,16 @@ const UtilsBox = ({
   themeMode: string | number;
   handleFunc: () => void;
 }) => {
+  /** React Query Client */
+  const queryClient = useQueryClient();
+
   /** 로그아웃으로 상태 갱신하는 함수 */
   const { isLoggedIn, logOut } = useStore();
 
   /** 로그아웃 함수 */
   const handleLogout = () => {
+    /** 저장된 모든 캐시데이터 삭제 */
+    queryClient.clear();
     logOut();
   };
 
