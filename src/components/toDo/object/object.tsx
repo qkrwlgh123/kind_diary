@@ -66,6 +66,8 @@ const Object = ({
     }
 
     if (event.key === "Enter") {
+      if (!typedTodo && !typedTodoForUpdate) return;
+
       if (
         toDoList
           .map((todo) => todo.name)

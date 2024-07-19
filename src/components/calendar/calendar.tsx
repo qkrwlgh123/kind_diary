@@ -11,21 +11,32 @@ import {
   StartDateChangeInterface,
   TileContentInterface,
 } from "../../types/calendar";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { handleRequestObjectList } from "../../api/object/list";
+import { handleChangeYearMonthInCalendar } from "../../function/calendar";
 
 const CalendarComponent = ({
   currentMonth,
-  handleChangeMonthToRenderhInCalendar,
-  wholeObjectListToRenderInCalendar,
   handleChangeMonthInCalendar,
   handleClickDateInCalendar,
 }: {
   currentMonth: string;
-  wholeObjectListToRenderInCalendar: ObjectQueryResult[];
-  handleChangeMonthToRenderhInCalendar: (date: Date) => void;
   handleChangeMonthInCalendar: (date: Date) => void;
   handleClickDateInCalendar: (date: Date) => void;
 }) => {
-  /** 일자 변경 함수, 월 변경될 경우 현재 월 갱신 */
+  /** 현재 캘린더 내 보여지는 연-월 => 월 별 목표리스트 서버 호출 및 캘린더 내 리스트 렌더링 */
+  const [currentMonthToRenderInCalendar, setCurrentMonthToRenderInCalendar] =
+    useState<string>(convertDateToMonthString(new Date()));
+
+  /** 캘린더 내 연-월에 해당하는 목표를 렌더링 하기 위한 useQuery 호출, [캐시 옵션: 30분] */
+  const { data } = useQuery<{ code: number; data: ObjectQueryResult[] }>({
+    queryKey: ["MonthlyData", currentMonthToRenderInCalendar],
+    queryFn: () => handleRequestObjectList(currentMonthToRenderInCalendar),
+    staleTime: 30 * 60 * 1000,
+  });
+
+  /** 일자 변경 함수, [월 변경될 경우 현재 월 갱신] */
   const handleClickDate = (value: Date) => {
     /** 선택된 일자의 연-월이 현재 연-월(currentMonth)과 다른 경우, 현재 월 덥데이트 */
     const clickedMonth = convertDateToMonthString(value);
@@ -34,23 +45,19 @@ const CalendarComponent = ({
     handleClickDateInCalendar(value);
   };
 
-  /** 캘린더 내 목표 리스트 렌더링을 위한 연-월 상태 변경 함수 */
-  const handleChangeYearMonthInCalendar = (
-    object: StartDateChangeInterface
-  ) => {
-    if (object.activeStartDate) {
-      handleChangeMonthToRenderhInCalendar(object.activeStartDate);
-    }
-  };
-
   return (
     <Style.CalendarContainer>
       <Calendar
-        onActiveStartDateChange={handleChangeYearMonthInCalendar}
-        onClickDay={(value) => handleClickDate(value)}
+        onActiveStartDateChange={(object: StartDateChangeInterface) =>
+          handleChangeYearMonthInCalendar(
+            object,
+            setCurrentMonthToRenderInCalendar
+          )
+        }
+        onClickDay={(value: Date) => handleClickDate(value)}
         tileContent={(object: TileContentInterface) => (
           <TileContent
-            list={wholeObjectListToRenderInCalendar.filter(
+            list={(data?.data ?? []).filter(
               (eachObject: ObjectQueryResult) =>
                 eachObject.date === convertDateToString(object.date)
             )}

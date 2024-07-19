@@ -38,21 +38,6 @@ const Home = () => {
     convertDateToString(new Date())
   );
 
-  /** 현재 캘린더 내 보여지는 연-월 => 월 별 목표리스트 서버 호출 및 캘린더 내 리스트 렌더링 */
-  const [currentMonthToRenderInCalendar, setCurrentMonthToRenderInCalendar] =
-    useState(convertDateToMonthString(new Date()));
-
-  /** 월 변경에 따른 currentMonthToRenderInCalendar 갱신 함수 */
-  const handleChangeMonthToRenderhInCalendar = (date: Date) => {
-    setCurrentMonthToRenderInCalendar(convertDateToMonthString(date));
-  };
-
-  /** 캘린더 내 렌더링 하기 위한 연-월에 따른 목표 리스트 */
-  const [
-    wholeObjectListToRenderInCalendar,
-    setWholeObjectListToRenderInCalendar,
-  ] = useState<ObjectQueryResult[]>([]);
-
   /** 월 선택에 따른 current Month 갱신 함수 */
   const handleChangeMonthInCalendar = (date: Date) => {
     setCurrentMonth(convertDateToMonthString(date));
@@ -283,21 +268,6 @@ const Home = () => {
     }
   }, [isCenterModalOpen]);
 
-  /** 연-월 변경에 따른 캘린더 내 목표 리스트 렌더링을 위한 목표 리스트 호출 */
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await handleRequestObjectList(
-          currentMonthToRenderInCalendar
-        );
-        setWholeObjectListToRenderInCalendar(result.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, [currentMonthToRenderInCalendar]);
-
   /** 연-월 변경에 따른 목표 리스트 호출 */
   useEffect(() => {
     const fetchData = async () => {
@@ -380,10 +350,6 @@ const Home = () => {
       <Style.Container>
         <CalendarComponent
           currentMonth={currentMonth}
-          handleChangeMonthToRenderhInCalendar={
-            handleChangeMonthToRenderhInCalendar
-          }
-          wholeObjectListToRenderInCalendar={wholeObjectListToRenderInCalendar}
           handleChangeMonthInCalendar={handleChangeMonthInCalendar}
           handleClickDateInCalendar={handleClickDateInCalendar}
         />
