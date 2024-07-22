@@ -15,7 +15,7 @@ const ButtonBox = styled.div<{
 
   button {
     background: inherit;
-    font-size: 15px;
+    font-size: 16px;
     border: none;
     cursor: pointer;
     font-weight: 700;

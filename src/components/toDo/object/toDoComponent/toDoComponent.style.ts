@@ -12,6 +12,8 @@ const ComponentContainer = styled.div<{ $isLightTheme: boolean }>`
 
   padding: ${(props) => (props.$isLightTheme ? "10px 10px" : "")};
   border-radius: 7px;
+
+  font-size: 17px;
 `;
 
 const LeftAreaContainer = styled.div`

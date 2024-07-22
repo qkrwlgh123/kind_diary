@@ -33,6 +33,11 @@ const CalendarStyle = createGlobalStyle`
     background-color: ${({ theme }) =>
       theme.calendarActiveBackground} !important;
   }
+
+  .react-calendar__navigation > button:hover {
+    background-color: ${({ theme }) =>
+      theme.calendarHoverBackground} !important;
+  }
 `;
 
 export default CalendarStyle;

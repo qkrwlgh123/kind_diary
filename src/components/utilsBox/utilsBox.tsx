@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import useStore from "../../store/authStore";
 import ThemeToggleBtn from "./themeToggleBtn/themeToggleBtn";
 import Style from "./utilsBox.style";
 import { useQueryClient } from "@tanstack/react-query";
+import UserInfo from "./userInfo/userInfo";
+import useAuthStore from "../../store/authStore";
 
 const UtilsBox = ({
   themeMode,
@@ -15,7 +16,7 @@ const UtilsBox = ({
   const queryClient = useQueryClient();
 
   /** 로그아웃으로 상태 갱신하는 함수 */
-  const { isLoggedIn, logOut } = useStore();
+  const { isLoggedIn, logOut } = useAuthStore();
 
   /** 로그아웃 함수 */
   const handleLogout = () => {
@@ -53,12 +54,17 @@ const UtilsBox = ({
   }, []);
   return (
     <Style.UtilsBox ref={utilsBoxRef} $isVisible={isVisible}>
+      {isLoggedIn && (
+        <>
+          <UserInfo />
+          <Style.LogoutButton onClick={handleLogout}>
+            로그아웃
+          </Style.LogoutButton>
+        </>
+      )}
       <Style.IconBox>
         <ThemeToggleBtn themeMode={themeMode} handleFunc={handleFunc} />
       </Style.IconBox>
-      {isLoggedIn && (
-        <Style.LogoutButton onClick={handleLogout}>로그아웃</Style.LogoutButton>
-      )}
     </Style.UtilsBox>
   );
 };

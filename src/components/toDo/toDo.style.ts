@@ -10,10 +10,15 @@ const TodoContainer = styled.div`
   }
 `;
 
+const SelectedDateBox = styled.div`
+  margin-bottom: 20px;
+  font-size: 17px;
+`;
+
 const ObjectListContainer = styled.div`
   gap: 10px;
   display: flex;
   flex-direction: column;
 `;
 
-export default { TodoContainer, ObjectListContainer };
+export default { TodoContainer, SelectedDateBox, ObjectListContainer };

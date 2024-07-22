@@ -354,6 +354,7 @@ const Home = () => {
           handleClickDateInCalendar={handleClickDateInCalendar}
         />
         <Todo
+          currentDate={currentDate}
           handleControlModal={handleControlModal}
           handleControlBottomModal={handleControlBottomModal}
           handleClickMenuboxInTodoComponent={handleClickMenuboxInTodoComponent}
