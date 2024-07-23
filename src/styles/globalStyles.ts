@@ -3,7 +3,6 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
-    touch-action: pan-y;
   }
   
   body {
@@ -19,6 +18,8 @@ const GlobalStyle = createGlobalStyle`
     -moz-user-select:none;
     -ms-user-select:none;
     user-select:none;
+
+    touch-action: pan-y;
   }  
 `;
 
