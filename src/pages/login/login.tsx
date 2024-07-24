@@ -56,6 +56,7 @@ const Login = () => {
           value={userInfo.name}
           autoComplete="username"
           onChange={handleTypeUserName}
+          autoCapitalize="off"
         />
       </div>
       <div>
