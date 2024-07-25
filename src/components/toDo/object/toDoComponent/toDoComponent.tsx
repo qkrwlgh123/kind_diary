@@ -8,6 +8,7 @@ import useThemeStore from "../../../../store/themeStore";
 const TodoComponent = ({
   id,
   name,
+  object_id,
   handleControlBottomModal,
   handleClickMenuboxInTodoComponent,
   objectColor,
@@ -16,21 +17,24 @@ const TodoComponent = ({
 }: {
   id: number | undefined;
   name: string;
+  object_id: number;
   handleControlBottomModal: () => void;
   handleClickMenuboxInTodoComponent: ({
     id,
     name,
     isCompleted,
+    object_id,
   }: TodoInterface) => void;
   objectColor: string;
-  handleCompleteTodo: (todoId: number) => void;
+  handleCompleteTodo: (objectId: number, todoId: number) => void;
   isCompleted?: boolean;
 }) => {
   /** 메뉴박스 클릭 함수 */
   const handleClickDotsIconBox = () => {
     handleControlBottomModal();
-    handleClickMenuboxInTodoComponent({ id, name, isCompleted });
+    handleClickMenuboxInTodoComponent({ id, name, isCompleted, object_id });
   };
+
   /** theme 전역 상태 */
   const { themeMode } = useThemeStore();
 
@@ -41,7 +45,7 @@ const TodoComponent = ({
           $objectColor={objectColor}
           onClick={() => {
             if (isCompleted) return;
-            if (id) handleCompleteTodo(id);
+            if (object_id && id) handleCompleteTodo(object_id, id);
           }}
         >
           {isCompleted && <FaRegSmile />}

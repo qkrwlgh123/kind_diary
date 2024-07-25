@@ -22,14 +22,11 @@ const ModalBackground = styled.div`
 `;
 
 const ModalWindow = styled.div<{ display: string }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
   position: fixed;
   bottom: 0px;
+  left: 50%;
   transform: ${(props) =>
-    props.display === "flex" ? "translateY(0)" : "translateY(100%)"};
+    props.display === "flex" ? "translate(-50%, 0)" : "translate(-50%, 100%)"};
   transition: transform 0.3s ease;
 
   border-radius: 10px;

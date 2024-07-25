@@ -26,16 +26,22 @@ const Object = ({
     id,
     name,
     isCompleted,
+    object_id,
   }: TodoInterface) => void;
   toDoList: TodoInterface[];
   isAddingTodo: boolean;
   handleChangeAddingTodoMode: (objectId: number) => void;
   handleAddTodo: (objectId: number, toDo: TodoInterface) => void;
-  handleUpdateTodo: (todoId: number, name: string) => void;
-  handleCompleteTodo: (todoId: number) => void;
+  handleUpdateTodo: (objectId: number, todoId: number, name: string) => void;
+  handleCompleteTodo: (objectId: number, todoId: number) => void;
 
   index: number;
 }) => {
+  /**
+   * 할일 입력 및 생성 영역
+   * ====================
+   */
+
   /** 클릭시 할입 입력 필드를 생성 및 활성화하는 함수 */
   const handleClickObject = (objectId: number) => {
     handleChangeAddingTodoMode(objectId);
@@ -49,6 +55,15 @@ const Object = ({
     setTypedTodo(event.target.value);
   };
 
+  /**
+   * ====================
+   */
+
+  /**
+   * 할일 수정 영역
+   * ====================
+   */
+
   /** 수정을 위한 입력 중인 할일 */
   const [typedTodoForUpdate, setTypedTodoForUpdate] = useState("");
 
@@ -58,6 +73,15 @@ const Object = ({
   ) => {
     setTypedTodoForUpdate(event.target.value);
   };
+
+  /**
+   * ====================
+   */
+
+  /**
+   * 할일 입력 필드 내 Enter 이벤트
+   * ====================
+   */
 
   /** 입력 중 엔터키 누를 시 할일이 추가 또는 수정되는 함수 */
   const handlePressEnter = (event: React.KeyboardEvent) => {
@@ -79,8 +103,9 @@ const Object = ({
 
       /** 할일 수정일 시 */
       const todoId = toDoList.find((todo) => todo.isUpdatingTodo === true)?.id;
+
       if (todoId) {
-        handleUpdateTodo(todoId, typedTodoForUpdate);
+        handleUpdateTodo(id, todoId, typedTodoForUpdate);
         setTypedTodoForUpdate("");
         return;
       }
@@ -90,6 +115,15 @@ const Object = ({
       setTypedTodo("");
     }
   };
+
+  /**
+   * ====================
+   */
+
+  /**
+   * 할일 생성 또는 수정 작업을 위한 input 필드에 대한 useEffect
+   * ====================
+   */
 
   /** Input 창에 대한 참조 생성 */
   const inputRef = useRef<HTMLInputElement>(null);
@@ -104,14 +138,25 @@ const Object = ({
 
   /** 할일 수정 모드 시 effect */
   useEffect(() => {
+    // if (inputRef.current) {
+    //   inputRef.current.focus();
+    // }
+    // console.log(toDoList.find((el) => el.isUpdatingTodo === true)?.name!);
+    // setTypedTodo(toDoList.find((el) => el.isUpdatingTodo === true)?.name!);
+
     if (updatedIntpuRef.current) {
       updatedIntpuRef.current.focus();
     }
     const updatingTodo = toDoList.find((todo) => todo.isUpdatingTodo);
+
     if (updatingTodo) {
       setTypedTodoForUpdate(updatingTodo.name);
     }
   }, [toDoList]);
+
+  /**
+   * ====================
+   */
 
   return (
     <div>
@@ -141,6 +186,7 @@ const Object = ({
                 key={toDo.id}
                 id={toDo.id}
                 name={toDo.name}
+                object_id={id}
                 handleControlBottomModal={handleControlBottomModal}
                 handleClickMenuboxInTodoComponent={
                   handleClickMenuboxInTodoComponent
