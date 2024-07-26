@@ -6,8 +6,8 @@ export const handleRequestEachObjectsAchievementResult = async (
   todayDate: string
 ) => {
   try {
-    const response = await axiosInstance.post("/api/achievement/each", {
-      data: { todayDate },
+    const response = await axiosInstance.get("/api/achievement/each", {
+      params: { todayDate },
     });
     return response.data;
   } catch (err) {

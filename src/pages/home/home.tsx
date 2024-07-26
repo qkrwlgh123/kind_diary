@@ -9,6 +9,11 @@ import {
 import AchievementResult from "../../components/modal/achievementResult/achievementResult";
 
 const Home = () => {
+  /**
+   * 목표 리스트 데이터 호출을 위한 변수 및 함수
+   * ====================
+   */
+
   /** 현재 선택된 연-월 => 월 별 목표 리스트 서버 호출 */
   const [currentMonth, setCurrentMonth] = useState(
     convertDateToMonthString(new Date())
@@ -28,6 +33,15 @@ const Home = () => {
   const handleClickDateInCalendar = (date: Date) => {
     setCurrentDate(convertDateToString(date));
   };
+
+  /**
+   * ====================
+   */
+
+  /**
+   * 토요일 팝업 영역
+   * ====================
+   */
 
   /** 토요일 팝업, 이번 주 성취 결과 Mdoal on, off 상태 */
   const [isAchievementResultModalOpen, setIsAchievementResultModalOpen] =
@@ -51,6 +65,10 @@ const Home = () => {
     }
     localStorage.removeItem("popup_flag");
   }, []);
+
+  /**
+   * ====================
+   */
 
   return (
     <>
