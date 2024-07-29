@@ -17,10 +17,15 @@ const theme: DefaultTheme = {
     todoComponentBgColor: "azure",
 
     skeletonBackground: "#E2E2E2",
+
+    loginButtonBgColor: "#3B81F6",
+    loginButtonFontColor: "#ffffff",
+    loginButtonHoverBgColor: "rgba(59, 129, 246, 0.7)",
+    loginButtonHoverFontColor: "#ffffff",
   },
 
   dark: {
-    backgroundColor: "#121212",
+    backgroundColor: "#1F2937",
     fontColor: "#ffffff",
     buttonBgColor: "#212529",
     modalBgColor: "#282828",
@@ -34,6 +39,11 @@ const theme: DefaultTheme = {
     todoComponentBgColor: "",
 
     skeletonBackground: "#3f3f3f",
+
+    loginButtonBgColor: "#ffffff",
+    loginButtonFontColor: "#374151",
+    loginButtonHoverBgColor: "inherit",
+    loginButtonHoverFontColor: "#ffffff",
   },
 
   objectBgColor: {
