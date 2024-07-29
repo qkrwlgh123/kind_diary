@@ -7,8 +7,12 @@ import {
   convertDateToString,
 } from "../../utils/dateUitls";
 import AchievementResult from "../../components/modal/achievementResult/achievementResult";
+import useAuthStore from "../../store/authStore";
 
 const Home = () => {
+  /** 사용자 이름 전역 상태 */
+  const { username } = useAuthStore();
+
   /**
    * 목표 리스트 데이터 호출을 위한 변수 및 함수
    * ====================
@@ -55,15 +59,18 @@ const Home = () => {
   /** 매주 토요일, 성취 결과 팝업 on Effect */
   useEffect(() => {
     const todayDateObject = new Date();
+
     if (todayDateObject.getDay() === 6) {
-      const popupFlagInLocalstorage = localStorage.getItem("popup_flag");
+      const popupFlagInLocalstorage = localStorage.getItem(
+        `popup_flag_${username}`
+      );
       if (!popupFlagInLocalstorage) {
         handleControlAchievementResultModal();
-        localStorage.setItem("popup_flag", "alreadyRendered");
+        localStorage.setItem(`popup_flag_${username}`, "alreadyRendered");
       }
       return;
     }
-    localStorage.removeItem("popup_flag");
+    localStorage.removeItem(`popup_flag_${username}`);
   }, []);
 
   /**

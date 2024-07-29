@@ -7,14 +7,26 @@ import {
   TitleContainer,
 } from "../commonStyle";
 import NextButtonComponent from "./nextButtonComponent/nextButtonComponent";
+import { useQuery } from "@tanstack/react-query";
+import { handleRequestGeneralAchievementResult } from "../../../../api/achievementResult/generalResult";
+import { convertDateToString } from "../../../../utils/dateUitls";
 
 const GeneralAchievementResult = ({
-  generalAchievementResult,
   handleFlipPage,
 }: {
-  generalAchievementResult: null | number;
   handleFlipPage: () => void;
 }) => {
+  /** 오늘 날짜 문자열 변환 */
+  const todayDate = convertDateToString(new Date());
+
+  /** 종합 달성률을 렌더링 하기 위한 useQuery 호출, [캐시 옵션: 0] */
+  const { data } = useQuery<{ code: number; data: number }>({
+    queryKey: ["GeneralAchievement", todayDate],
+    queryFn: () => handleRequestGeneralAchievementResult(todayDate),
+    staleTime: 0,
+    enabled: new Date().getDay() === 6,
+  });
+
   /** 페이지가 렌더링 된 후, 지난 시간(렌더링된 후, 3초가 지나야 페이지 넘어가는 것이 가능) */
   const [isTimePassed, setIsTimePassed] = useState(false);
 
@@ -24,27 +36,21 @@ const GeneralAchievementResult = ({
   /** 달성률에 따른 피드백 메세지 갱신 Effect(트랜지션 적용을 위해 지연시간 적용) */
   useEffect(() => {
     const setFeedbackMessageTimer = window.setTimeout(() => {
-      if (generalAchievementResult) {
-        if (generalAchievementResult < 80) {
+      if (data) {
+        if (data.data < 80) {
           setFeedbackMessage(generalResultMessage.lessThanEighty);
-        } else if (
-          generalAchievementResult >= 80 &&
-          generalAchievementResult < 90
-        ) {
+        } else if (data.data >= 80 && data.data < 90) {
           setFeedbackMessage(generalResultMessage.moreThanEighty);
-        } else if (
-          generalAchievementResult >= 80 &&
-          generalAchievementResult < 100
-        ) {
+        } else if (data.data >= 80 && data.data < 100) {
           setFeedbackMessage(generalResultMessage.moreThanNinety);
-        } else if (generalAchievementResult === 100) {
+        } else if (data.data === 100) {
           setFeedbackMessage(generalResultMessage.perfect);
         }
       }
     }, 1000);
 
     return () => clearTimeout(setFeedbackMessageTimer);
-  }, [generalAchievementResult]);
+  }, [data]);
 
   /** 페이지 넘기기는 3초 후에 가능하도록 하는 Effect */
   useEffect(() => {
@@ -60,12 +66,8 @@ const GeneralAchievementResult = ({
       <TitleContainer>
         <h2>이번 주 전체 달성률</h2>
       </TitleContainer>
-      <BarGraphComponent
-        progressRate={generalAchievementResult ? generalAchievementResult : 0}
-      />
-      <MessageContainer
-        $animationText={generalAchievementResult ? true : false}
-      >
+      <BarGraphComponent progressRate={data?.data ? data.data : 0} />
+      <MessageContainer $animationText={data?.data ? true : false}>
         <span>{feedbackMessage}</span>
       </MessageContainer>
       <NextButtonComponent
