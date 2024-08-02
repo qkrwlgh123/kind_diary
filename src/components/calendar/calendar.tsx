@@ -67,6 +67,7 @@ const CalendarComponent = ({
         formatDay={(locale: string | undefined, date: Date) =>
           String(date.getDate())
         }
+        showNeighboringMonth={false}
       />
     </Style.CalendarContainer>
   );

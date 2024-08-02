@@ -14,6 +14,11 @@ const ComponentContainer = styled.div<{ $isLightTheme: boolean }>`
   border-radius: 7px;
 
   font-size: 16px;
+
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 `;
 
 const LeftAreaContainer = styled.div`
