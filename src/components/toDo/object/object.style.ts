@@ -1,5 +1,28 @@
 import styled from "styled-components";
 
+const ObjectInfoBox = styled.div<{ $isHoverOnObject: boolean }>`
+  display: flex;
+  align-items: center;
+
+  width: fit-content;
+  padding-right: ${(props) => (props.$isHoverOnObject ? "20px" : 0)};
+`;
+
+const IconBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.7rem;
+  width: 13px;
+  height: 13px;
+
+  cursor: pointer;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 const TodoListContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,6 +62,9 @@ const InputTodoBorder = styled.span<{
 `;
 
 export default {
+  ObjectInfoBox,
+
+  IconBox,
   TodoListContainer,
   InputTodoBox,
   InputTodo,

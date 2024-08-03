@@ -4,6 +4,7 @@ import Button from "../../common/button/button";
 import Style from "./object.style";
 import TodoComponent from "./toDoComponent/toDoComponent";
 import { getObjectBgColor } from "../../../utils/colorUtils";
+import { FaPencilAlt } from "react-icons/fa";
 
 const Object = ({
   id,
@@ -37,6 +38,9 @@ const Object = ({
 
   index: number;
 }) => {
+  /** 목표 위에 마우스 커서 hover 중인지를 나타내는 상태 => 목표 편집 아이콘 조건부 렌더링 */
+  const [isHoverOnObject, setIsHoverOnObject] = useState(false);
+
   /**
    * 할일 입력 및 생성 영역
    * ====================
@@ -138,12 +142,6 @@ const Object = ({
 
   /** 할일 수정 모드 시 effect */
   useEffect(() => {
-    // if (inputRef.current) {
-    //   inputRef.current.focus();
-    // }
-    // console.log(toDoList.find((el) => el.isUpdatingTodo === true)?.name!);
-    // setTypedTodo(toDoList.find((el) => el.isUpdatingTodo === true)?.name!);
-
     if (updatedIntpuRef.current) {
       updatedIntpuRef.current.focus();
     }
@@ -160,9 +158,20 @@ const Object = ({
 
   return (
     <div>
-      <Button onClickFunc={() => handleClickObject(id)} index={index}>
-        {name}
-      </Button>
+      <Style.ObjectInfoBox
+        onMouseEnter={() => setIsHoverOnObject(true)}
+        onMouseLeave={() => setIsHoverOnObject(false)}
+        $isHoverOnObject={isHoverOnObject}
+      >
+        <Button onClickFunc={() => handleClickObject(id)} index={index}>
+          {name}
+        </Button>
+        {isHoverOnObject && (
+          <Style.IconBox>
+            <FaPencilAlt />
+          </Style.IconBox>
+        )}
+      </Style.ObjectInfoBox>
       <div>
         <Style.TodoListContainer>
           {toDoList.map((toDo: TodoInterface) =>
