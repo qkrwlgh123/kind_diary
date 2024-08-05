@@ -4,7 +4,7 @@ import axios, { AxiosError } from "axios";
 /** 할일 수정 요청 함수 */
 export const handleRequestUpdateTodo = async (todoId: number, name: string) => {
   try {
-    const response = await axiosInstance.put("/api/todo/update", {
+    const response = await axiosInstance.patch("/api/todo/update", {
       data: { todoId, name },
     });
     return response.data;

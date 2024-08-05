@@ -4,7 +4,7 @@ import axios, { AxiosError } from "axios";
 /** 할일 미완료 요청 함수 */
 export const handleRequestUncompleteTodo = async (todoId: number) => {
   try {
-    const response = await axiosInstance.put("/api/todo/unComplete", {
+    const response = await axiosInstance.patch("/api/todo/unComplete", {
       data: { todoId },
     });
     return response.data;

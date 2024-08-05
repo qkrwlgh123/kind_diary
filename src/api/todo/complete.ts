@@ -4,7 +4,7 @@ import axios, { AxiosError } from "axios";
 /** 할일 완료 요청 함수 */
 export const handleRequestCompleteTodo = async (todoId: number) => {
   try {
-    const response = await axiosInstance.put("/api/todo/complete", {
+    const response = await axiosInstance.patch("/api/todo/complete", {
       data: { todoId },
     });
     return response.data;
