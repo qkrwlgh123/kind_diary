@@ -12,11 +12,13 @@ import { ObjectQueryResult } from "../../types/queryResult/objectList";
 import AddObjectModal from "../modal/addObjectModal/addObjectModal";
 import { handleRequestAddObject } from "../../api/object/add";
 import { handleRequestAddTodo } from "../../api/todo/add";
-import ManipulateTodoInfo from "../modal/manipulateTodoInfo/manipulateTodoInfo";
+import ManipulateTodoInfo from "../modal/manipulateObjectOrTodo/manipulateTodoInfo/manipulateTodoInfo";
 import { handleRequestDeleteTodo } from "../../api/todo/delete";
 import { handleRequestUncompleteTodo } from "../../api/todo/unComplete";
 import { handleRequestCompleteTodo } from "../../api/todo/complete";
 import { handleRequestUpdateTodo } from "../../api/todo/update";
+import ManipulateObjectInfo from "../modal/manipulateObjectOrTodo/manipulateObjectInfo/manipulateObjectInfo";
+import { handleRequestDeleteObject } from "../../api/object/delete";
 
 const Todo = ({
   currentMonth,
@@ -227,13 +229,18 @@ const Todo = ({
    * ====================
    */
 
+  /**
+   * 할일 편집 영역
+   * ====================
+   */
+
   /** 메뉴박스를 클릭하여 선택한 Todo */
   const [selectedTodo, setSelectedTodo] = useState<TodoInterface>();
 
-  /** 할일, 목표 수정 Modal on, off 상태 */
+  /** 할일 수정 Modal on, off 상태 */
   const [isBottomModalOpen, setIsBottomModalOpen] = useState(false);
 
-  /** 할일, 목표 수정 Modal on, off control 함수 */
+  /** 할일 수정 Modal control 함수 */
   const handleControlBottomModal = () => {
     setIsBottomModalOpen((prev) => !prev);
   };
@@ -482,6 +489,76 @@ const Todo = ({
    */
 
   /**
+   * 목표 편집 영역
+   * ====================
+   */
+
+  /** 목표 편집 버튼을 클릭하여 선택한 Object */
+  const [selectedObject, setSelectedObject] = useState<{
+    id: number;
+    name: string;
+  }>({ id: 0, name: "" });
+
+  /** 목표 수정 Modal on, off 상태 */
+  const [isBottomModalOfObjectOpen, setIsBottomModalOfObjectOpen] =
+    useState(false);
+
+  /** 목표 수정 Modal control 함수 */
+  const handleControlBottomModalofObject = () => {
+    setIsBottomModalOfObjectOpen((prev) => !prev);
+  };
+
+  /** 목표 편집 버튼을 클릭하여 Object 정보를 가져오는 함수 */
+  const handleClickEditIconInObject = ({
+    id,
+    name,
+  }: {
+    id: number;
+    name: string;
+  }) => {
+    setSelectedObject({ id, name });
+  };
+
+  /** 목표 삭제 함수 */
+  const handleDeleteObject = async (objectId: number) => {
+    const requestDeleteTodoResult = await handleRequestDeleteObject(objectId);
+
+    /** 할일 삭제 요청 성공 시, 월별 목표 리스트 호출 및 갱신 */
+    if (requestDeleteTodoResult.code === 200) {
+      queryClient.setQueryData<{
+        code: number;
+        data: ObjectQueryResult[];
+      }>(["TodoData", currentMonth], (oldData) => {
+        if (oldData) {
+          return {
+            ...oldData,
+            data: oldData.data.filter((object) => object.id !== objectId),
+          };
+        } else {
+          const existingData = queryClient.getQueryData<{
+            code: number;
+            data: ObjectQueryResult[];
+          }>(["TodoData", currentMonth]);
+          return {
+            code: 200,
+            data: existingData?.data || [],
+          };
+        }
+      });
+
+      handleControlBottomModalofObject();
+    }
+  };
+
+  /**
+   * ====================
+   */
+
+  /**
+   * ====================
+   */
+
+  /**
    * 목표 & 할일 리스트 업데이트 영역
    * ====================
    */
@@ -554,9 +631,13 @@ const Todo = ({
                 id={object.id}
                 name={object.name}
                 handleControlBottomModal={handleControlBottomModal}
+                handleControlBottomModalOfObject={
+                  handleControlBottomModalofObject
+                }
                 handleClickMenuboxInTodoComponent={
                   handleClickMenuboxInTodoComponent
                 }
+                handleClickEditIconInObject={handleClickEditIconInObject}
                 toDoList={object.toDoList}
                 isAddingTodo={object.isAddingTodo}
                 handleChangeAddingTodoMode={handleChangeAddingTodoMode}
@@ -571,6 +652,8 @@ const Todo = ({
           )}
         </Style.ObjectListContainer>
       </Style.TodoContainer>
+
+      {/* 목표 또는 할일 편집을 위한 Bottom Modal 영역 */}
       <ManipulateTodoInfo
         isBottomModalOpen={isBottomModalOpen}
         handleControlBottomModal={handleControlBottomModal}
@@ -578,6 +661,12 @@ const Todo = ({
         handleChangeUpdatingTodoMode={handleChangeUpdatingTodoMode}
         handleDeleteTodo={handleDeleteTodo}
         handleUncompleteTodo={handleUncompleteTodo}
+      />
+      <ManipulateObjectInfo
+        isBottomModalOpen={isBottomModalOfObjectOpen}
+        handleControlBottomModal={handleControlBottomModalofObject}
+        selectedObject={selectedObject}
+        handleDeleteObject={handleDeleteObject}
       />
     </>
   );

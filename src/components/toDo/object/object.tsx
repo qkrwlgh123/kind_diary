@@ -10,7 +10,9 @@ const Object = ({
   id,
   name,
   handleControlBottomModal,
+  handleControlBottomModalOfObject,
   handleClickMenuboxInTodoComponent,
+  handleClickEditIconInObject,
   toDoList,
   isAddingTodo,
   handleChangeAddingTodoMode,
@@ -23,12 +25,20 @@ const Object = ({
   id: number;
   name: string;
   handleControlBottomModal: () => void;
+  handleControlBottomModalOfObject: () => void;
   handleClickMenuboxInTodoComponent: ({
     id,
     name,
     isCompleted,
     object_id,
   }: TodoInterface) => void;
+  handleClickEditIconInObject: ({
+    id,
+    name,
+  }: {
+    id: number;
+    name: string;
+  }) => void;
   toDoList: TodoInterface[];
   isAddingTodo: boolean;
   handleChangeAddingTodoMode: (objectId: number) => void;
@@ -38,9 +48,6 @@ const Object = ({
 
   index: number;
 }) => {
-  /** 목표 위에 마우스 커서 hover 중인지를 나타내는 상태 => 목표 편집 아이콘 조건부 렌더링 */
-  const [isHoverOnObject, setIsHoverOnObject] = useState(false);
-
   /**
    * 할일 입력 및 생성 영역
    * ====================
@@ -156,6 +163,22 @@ const Object = ({
    * ====================
    */
 
+  /**
+   * 목표 편집 or 삭제를 위한 영역
+   * ====================
+   */
+
+  /** 목표 위에 마우스 커서 hover 중인지를 나타내는 상태 => 목표 편집 아이콘 조건부 렌더링 */
+  const [isHoverOnObject, setIsHoverOnObject] = useState(false);
+
+  const handleClickEditIcon = () => {
+    handleClickEditIconInObject({ id, name });
+    handleControlBottomModalOfObject();
+  };
+
+  /**
+   * ====================
+   */
   return (
     <div>
       <Style.ObjectInfoBox
@@ -167,7 +190,7 @@ const Object = ({
           {name}
         </Button>
         {isHoverOnObject && (
-          <Style.IconBox>
+          <Style.IconBox onClick={handleClickEditIcon}>
             <FaPencilAlt />
           </Style.IconBox>
         )}

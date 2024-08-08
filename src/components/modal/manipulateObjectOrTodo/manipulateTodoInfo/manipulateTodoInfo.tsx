@@ -1,6 +1,6 @@
-import { TodoInterface } from "../../../types/object";
-import BottomModal from "../../common/modal/bottom/bottomModal";
-import Style from "./manipulateTodoInfo.style";
+import { TodoInterface } from "../../../../types/object";
+import BottomModal from "../../../common/modal/bottom/bottomModal";
+import Style from "../manipulate.style";
 
 interface ManipulateTodoInfoProps {
   isBottomModalOpen: boolean;
@@ -26,21 +26,21 @@ const ManipulateTodoInfo: React.FC<ManipulateTodoInfoProps> = ({
     >
       <Style.BottonModalTitle>{selectedTodo?.name}</Style.BottonModalTitle>
       <Style.ButtonsContainer>
-        <Style.TodoFuncButton
+        <Style.FuncButton
           onClick={() => {
             if (selectedTodo?.id) handleChangeUpdatingTodoMode(selectedTodo.id);
           }}
         >
           수정하기
-        </Style.TodoFuncButton>
-        <Style.TodoFuncButton
+        </Style.FuncButton>
+        <Style.FuncButton
           onClick={() => {
             if (selectedTodo?.object_id && selectedTodo?.id)
               handleDeleteTodo(selectedTodo.object_id, selectedTodo.id);
           }}
         >
           삭제하기
-        </Style.TodoFuncButton>
+        </Style.FuncButton>
       </Style.ButtonsContainer>
       <Style.BottomModalListContainer>
         {selectedTodo?.isCompleted && (

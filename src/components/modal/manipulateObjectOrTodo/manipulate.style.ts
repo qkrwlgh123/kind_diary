@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const BottonModalTitle = styled.div`
   margin: 15px 0 30px 0;
+  text-align: center;
 `;
 
 const ButtonsContainer = styled.div`
@@ -10,7 +11,7 @@ const ButtonsContainer = styled.div`
   gap: 10px;
 `;
 
-const TodoFuncButton = styled.div`
+const FuncButton = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
   border-radius: 5px;
   padding: 15px;
@@ -35,6 +36,6 @@ const BottomModalListContainer = styled.div`
 export default {
   BottonModalTitle,
   ButtonsContainer,
-  TodoFuncButton,
+  FuncButton,
   BottomModalListContainer,
 };
