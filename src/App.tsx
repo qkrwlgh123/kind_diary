@@ -4,13 +4,13 @@ import Login from "./pages/login/login";
 import Layout from "./styles/layout/layout";
 import { ThemeProvider } from "styled-components";
 import theme from "./styles/layout/themes";
-import { useEffect, useState } from "react";
 import GlobalStyle from "./styles/globalStyles";
 import CalendarStyle from "./styles/calendarStyles";
 import ProtectedRoute from "./components/auth/protectedRoute";
 import useAuthStore from "./store/authStore";
 import UtilsBox from "./components/utilsBox/utilsBox";
 import useThemeStore from "./store/themeStore";
+import { useEffect, useRef, useState } from "react";
 
 const App = () => {
   /** 로그인 전역 상태 */
@@ -19,11 +19,60 @@ const App = () => {
   /** theme 전역 상태 */
   const { themeMode, changeTheme } = useThemeStore();
 
+  /**
+   * 스크롤 위치에 따른 계정 정보 visible 변경 영역
+   * ====================
+   */
+
+  /** UtilsBox의 bottom rect value, 및 본문 컴포넌트의 top rect value */
+  const [bottomRectValueOfUtilsBox, setBottomOffsetOfUtilsBox] = useState(0);
+  const [topRectValueOfContentsComponent, setTopRectValueOfContentsComponent] =
+    useState(0);
+
+  /** UtilsBox 및 본문 컴포넌트의 Rect Value를 얻기 위한 useRef */
+  const utilsBoxRef = useRef<HTMLDivElement>(null);
+  const contentsComponentRef = useRef<HTMLDivElement>(null);
+
+  /** UtilsBox, Contents Component Rect value 갱신 함수 */
+  const handleUpdateRectValueOfUtilsBox = (rectValue: number) => {
+    setBottomOffsetOfUtilsBox(rectValue);
+  };
+
+  const handleUpdateRectValueOfContentsComponent = (rectValue: number) => {
+    setTopRectValueOfContentsComponent(rectValue);
+  };
+
+  /** UtilsBox Componentd의 visible 여부 */
+  const [isUtilsBoxVisible, setIsUtilsBoxVisible] = useState(true);
+
+  /** 스크롤 위치에 따라 UtilsBox의 visible 상태 변경하는 Effect */
+  useEffect(() => {
+    if (
+      topRectValueOfContentsComponent > 0 &&
+      topRectValueOfContentsComponent <= bottomRectValueOfUtilsBox
+    ) {
+      setIsUtilsBoxVisible(false);
+    } else if (topRectValueOfContentsComponent > bottomRectValueOfUtilsBox) {
+      setIsUtilsBoxVisible(true);
+    }
+  }, [topRectValueOfContentsComponent]);
+
+  /**
+   * ====================
+   */
+
   /** 라우트 목록 */
   const routeList = [
     {
       path: "/",
-      element: <Home />,
+      element: (
+        <Home
+          ref={contentsComponentRef}
+          handleUpdateRectValueOfContentsComponent={
+            handleUpdateRectValueOfContentsComponent
+          }
+        />
+      ),
       isPrivate: true,
     },
     {
@@ -39,7 +88,13 @@ const App = () => {
         <GlobalStyle />
         <CalendarStyle />
         <Layout>
-          <UtilsBox themeMode={themeMode} handleFunc={changeTheme} />
+          <UtilsBox
+            themeMode={themeMode}
+            handleFunc={changeTheme}
+            isUtilsBoxVisible={isUtilsBoxVisible}
+            handleUpdateRectValueOfUtilsBox={handleUpdateRectValueOfUtilsBox}
+            ref={utilsBoxRef}
+          />
 
           <Routes>
             {routeList.map((route) => {
