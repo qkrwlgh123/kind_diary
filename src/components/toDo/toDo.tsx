@@ -497,7 +497,8 @@ const Todo = ({
   const [selectedObject, setSelectedObject] = useState<{
     id: number;
     name: string;
-  }>({ id: 0, name: "" });
+    toDoList: TodoInterface[];
+  }>({ id: 0, name: "", toDoList: [] });
 
   /** 목표 수정 Modal on, off 상태 */
   const [isBottomModalOfObjectOpen, setIsBottomModalOfObjectOpen] =
@@ -512,15 +513,22 @@ const Todo = ({
   const handleClickEditIconInObject = ({
     id,
     name,
+    toDoList,
   }: {
     id: number;
     name: string;
+    toDoList: TodoInterface[];
   }) => {
-    setSelectedObject({ id, name });
+    setSelectedObject({ id, name, toDoList });
   };
 
   /** 목표 삭제 함수 */
   const handleDeleteObject = async (objectId: number) => {
+    if (selectedObject.toDoList.length > 0) {
+      alert("목표를 이루기 위한 해야할 작업들이 남아있습니다.");
+      return;
+    }
+
     const requestDeleteTodoResult = await handleRequestDeleteObject(objectId);
 
     /** 할일 삭제 요청 성공 시, 월별 목표 리스트 호출 및 갱신 */

@@ -38,6 +38,7 @@ const Object = ({
   }: {
     id: number;
     name: string;
+    toDoList: TodoInterface[];
   }) => void;
   toDoList: TodoInterface[];
   isAddingTodo: boolean;
@@ -171,8 +172,9 @@ const Object = ({
   /** 목표 위에 마우스 커서 hover 중인지를 나타내는 상태 => 목표 편집 아이콘 조건부 렌더링 */
   const [isHoverOnObject, setIsHoverOnObject] = useState(false);
 
+  /** 편집 아이콘 클릭 시, 목표의 정보를 상태에 갱신 및 Bottom modal 렌더링 */
   const handleClickEditIcon = () => {
-    handleClickEditIconInObject({ id, name });
+    handleClickEditIconInObject({ id, name, toDoList });
     handleControlBottomModalOfObject();
   };
 
