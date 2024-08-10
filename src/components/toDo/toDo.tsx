@@ -148,6 +148,11 @@ const Todo = ({
   const handleChangeAddingTodoMode = (objectId: number) => {
     const updatedObjectList = objectList.map((object) => {
       if (object.id === objectId) {
+        /** 할일 추가 모드가 false로 변환되어야하는 경우, 최근 할일이 추가된 목표 id 초기화 */
+        if (object.isAddingTodo) {
+          setParentObjectOfRecentTodo(0);
+        }
+
         return {
           ...object,
           isAddingTodo: !object.isAddingTodo,
@@ -577,12 +582,13 @@ const Todo = ({
   /** 현재 날짜 변경에 따라 목표 리스트 업데이트, 최근 추가된 목표의 경우 할일 추가 모드 유지 */
   useEffect(() => {
     if (data) {
-      // date가 오늘 날짜(currentDate)와 같은 데이터 필터링
+      /** date가 오늘 날짜(currentDate)와 같은 데이터 필터링 */
       const filteredData = data.data
         .filter((item) => {
           const itemDate = item.date;
           return itemDate === currentDate;
         })
+        /** 최근 추가된 목표의 id 값이 존재하면, 할일 추가 모드 유지 */
         .map((object) => {
           if (object.id === parentObjectOfRecentTodo) {
             return {
