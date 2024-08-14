@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
+    font-family: 'Apple SD Gothic neo';
   }
   
   body {
@@ -11,7 +12,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
 
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-weight: 500;
 
     -webkit-user-select:none;

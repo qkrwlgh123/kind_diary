@@ -14,6 +14,7 @@ const ComponentContainer = styled.div<{ $isLightTheme: boolean }>`
   border-radius: 7px;
 
   font-size: 16px;
+  font-weight: 600;
 
   -webkit-user-select: text;
   -moz-user-select: text;
