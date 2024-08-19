@@ -4,9 +4,11 @@ const UtilsBox = styled.div<{ $isVisible: boolean }>`
   display: flex;
   align-items: center;
   gap: 20px;
+
   position: fixed;
   top: 6%;
   left: 15%;
+
   font-size: 20px;
 
   @media (max-width: 950px) {

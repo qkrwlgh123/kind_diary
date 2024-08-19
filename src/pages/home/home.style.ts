@@ -2,10 +2,12 @@ import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
-  width: 70%;
+
+  width: 100%;
+  max-width: 1250px;
+
   @media (max-width: 950px) {
     flex-direction: column;
-    width: 100%;
   }
 `;
 

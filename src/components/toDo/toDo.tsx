@@ -1,6 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ObjectInferface, TodoInterface } from "../../types/object";
-import { convertDateToFullDateString } from "../../utils/dateUitls";
 import ObjectSkeleton from "../common/loadingIndicator/skeletonUIComponent/object/objectSkeleton";
 import AddNewObject from "./newObject/addNewObject";
 import Object from "./object/object";
@@ -627,13 +626,11 @@ const Todo = ({
       />
 
       <Style.TodoContainer>
-        {/* 새 목표 생성 버튼 */}
-        <AddNewObject handleControlModal={handleControlModal} />
-
-        {/* 선택된 날짜에 해당하는 연-월-일 문자열 */}
-        <Style.SelectedDateBox>
-          <span>{convertDateToFullDateString(currentDate)}</span>
-        </Style.SelectedDateBox>
+        {/* 선택된 날짜에 해당하는 연-월-일 문자열 & 새 목표 생성 버튼 */}
+        <AddNewObject
+          currentDate={currentDate}
+          handleControlModal={handleControlModal}
+        />
 
         <Style.ObjectListContainer>
           {isFetching ? (
