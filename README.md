@@ -92,8 +92,8 @@ src
 │   ├── fonts
 ├── types
 ├── utils
-App.tsx
-index.tsx
+├── App.tsx
+├── index.tsx
 package.json
 ```
 
