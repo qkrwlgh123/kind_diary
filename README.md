@@ -1,46 +1,90 @@
-# Getting Started with Create React App
+# 🗒 Kind diary Front
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![license](https://img.shields.io/badge/License-GPL-red)](https://en.wikipedia.org/wiki/GNU_General_Public_License)
+[![code](https://img.shields.io/badge/Code-Typescript-blue)](https://www.typescriptlang.org/)
+[![Framework](https://img.shields.io/badge/Framework-React-orange)](https://react.dev/)
+[![member](https://img.shields.io/badge/Project-Personal-brightgreen)](https://github.com/qkrwlgh123)
 
-## Available Scripts
+> 개인 일정 관리 및 Task 관리, Archiving 플랫폼 👉 https://diary.kindparks.com/
 
-In the project directory, you can run:
+<img src="https://github.com/user-attachments/assets/4e0e861d-6c40-47ed-9079-a2519595c6a6" alt="Image Description" width="900"/>
 
-### `npm start`
+## 📖 Description
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+개인 일정을 관리하며, 일정에 따른 목표와 해야할 작업들을 기록하고 아키이빙하기 위한 프로젝트입니다,
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+일정 별로 수립했던 목표와 수행했던 작업들을 캘린더 내에서 한눈에 확인하고,
 
-### `npm test`
+수립한 목표들에 대한 진행도를 확인하고 이에 대한 피드백에 기반하여 추후 일정을 더 체계적으로 관리하기 위해 기획한 프로젝트입니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ⭐ Main Feature
 
-### `npm run build`
+### 일자별 목표 및 수행해야할 일 기록, 조회
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- React-query를 활용하여 API 요청 및 Data Caching을 통해 API 중복 호출 방지 구현
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 수립 목표들에 대한 진행률 조회
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- 토요일인 경우 팝업을 통한 진행률 및 피드백 메세지 조회
 
-### `npm run eject`
+### 다크모드
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Styled-component의 Theme-provider를 활용하여 다크모드, 라이트모드 구현
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 💻 Getting Started
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Installation
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+npm install
+```
 
-## Learn More
+### Develop Mode
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Production
+
+```
+npm run build
+```
+
+## 🔧 Stack
+
+- **Language**: TypeScript
+- **Library & Framework** : React.js, Styled-component, React-query, Zustand
+- **Deploy**: AWS S3, Cloudfront
+
+## :open_file_folder: Project Structure
+
+```markdown
+public
+src
+├── api
+├── asset
+├── function
+├── hooks
+├── components
+├── pages
+├── store
+│   ├── authStore
+│   ├── themeStore
+├── styles
+│   ├── layout
+│   ├── fonts
+├── types
+├── utils
+App.tsx
+index.tsx
+package.json
+```
+
+## 🔨 Architecture
+
+<img src="https://github.com/user-attachments/assets/27fe1e9a-a762-4d55-8616-4f1bc8802244" alt="Image Description" width="1000"/>
+
+## 👨‍👩‍👧‍👦 Developer
+
+- **박지호** ([qkrwlgh123](https://github.com/qkrwlgh123))
